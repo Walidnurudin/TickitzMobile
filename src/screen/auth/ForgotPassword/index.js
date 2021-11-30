@@ -4,7 +4,7 @@ import {Button, Input, Gap, MsgResponse} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 import {tickitz} from '../../../assets/images';
 
-function Login({navigation}) {
+function ForgotPassword({navigation}) {
   const [response, setResponse] = useState({
     msg: '',
     isSuccess: true,
@@ -18,29 +18,15 @@ function Login({navigation}) {
     <View style={styles.container}>
       <Image source={tickitz} style={styles.logo} />
       <Gap height={46} />
-      <Text style={styles.title}>Sign In</Text>
+      <Text style={styles.title}>Forgot password</Text>
+      <Text style={styles.desc}>we'll send a link to your email shortly</Text>
       <Gap height={41} />
       <Input label="Email" placeholder="Write your email" />
-      <Gap height={25} />
-      <Input
-        label="Password"
-        placeholder="Write your password"
-        isPassword={true}
-      />
       <Gap height={40} />
       {response.isShow && (
         <MsgResponse msg={response.msg} isSuccess={response.isSuccess} />
       )}
-      <Button title="Sign In" isLoading={false} onPress={handleReset} />
-      <Gap height={32} />
-      <Text style={styles.desc}>
-        Forgot your password?{' '}
-        <Text
-          style={styles.link}
-          onPress={() => navigation.navigate('AppNavigator', {screen: 'Home'})}>
-          Reset now
-        </Text>
-      </Text>
+      <Button title="Activate Now" isLoading={false} onPress={handleReset} />
     </View>
   );
 }
@@ -62,11 +48,9 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   desc: {
-    textAlign: 'center',
-  },
-  link: {
-    color: colors.primary,
+    marginTop: 10,
+    color: colors.third,
   },
 });
 
-export default Login;
+export default ForgotPassword;

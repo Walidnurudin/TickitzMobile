@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // import {Splash} from '../screen/Splash';
-import {Login} from '../screen/auth';
+import {ForgotPassword} from '../screen/auth';
 
 import AuthNavigator from './auth';
 import AppNavigator from './app';
@@ -16,8 +16,8 @@ function MainStackNavigator(params) {
       <Stack.Navigator>
         {/* Testing */}
         <Stack.Screen
-          component={Login}
-          name="Login"
+          component={ForgotPassword}
+          name="ForgotPassword"
           options={{headerShown: false}}
         />
 
