@@ -6,8 +6,8 @@ import Icon from 'react-native-vector-icons/Feather';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-import {Home, Profile} from '../screen';
-import {DrawerContent} from '../components';
+import {Home, Profile} from '../screen/main';
+import {DrawerContent} from '../components/atoms';
 
 function HomeNavigator() {
   return (

@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import {Login} from '../screen';
+import {Login} from '../screen/auth';
 
 function AuthNavigator() {
   return (
