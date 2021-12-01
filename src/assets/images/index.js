@@ -1,5 +1,6 @@
 import tickitz from './tickitz.png';
 import def from './default.jpg';
+import hero from './hero.png';
 
 import bca from './bca.png';
 import bri from './bri.png';
@@ -17,6 +18,7 @@ import ebvid from './ebv.id.png';
 export {
   tickitz,
   def,
+  hero,
   bca,
   bri,
   dana,

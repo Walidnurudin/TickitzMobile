@@ -2,8 +2,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-// import {Splash} from '../screen/Splash';
-import {ForgotPassword} from '../screen/auth';
+// import Splash from '../screen/Splash';
+import {Home} from '../screen/main';
 
 import AuthNavigator from './auth';
 import AppNavigator from './app';
@@ -16,8 +16,8 @@ function MainStackNavigator(params) {
       <Stack.Navigator>
         {/* Testing */}
         <Stack.Screen
-          component={ForgotPassword}
-          name="ForgotPassword"
+          component={Home}
+          name="Home"
           options={{headerShown: false}}
         />
 
@@ -26,11 +26,11 @@ function MainStackNavigator(params) {
           name="Splash"
           options={{headerShown: false}}
         /> */}
-        {/* <Stack.Screen
+        <Stack.Screen
           component={AuthNavigator}
           name="AuthNavigator"
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           component={AppNavigator}
           name="AppNavigator"

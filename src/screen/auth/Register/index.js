@@ -35,9 +35,7 @@ function Register({navigation}) {
       <Gap height={32} />
       <Text style={styles.desc}>
         Do you already have an account?{' '}
-        <Text
-          style={styles.link}
-          onPress={() => navigation.navigate('AppNavigator', {screen: 'Home'})}>
+        <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
           Log in
         </Text>
       </Text>

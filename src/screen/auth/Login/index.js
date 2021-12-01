@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import {Button, Input, Gap, MsgResponse} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 import {tickitz} from '../../../assets/images';
@@ -10,12 +10,12 @@ function Login({navigation}) {
     isSuccess: true,
     isShow: false,
   });
-  const handleReset = () => {
+  const handleLogin = () => {
     navigation.navigate('AppNavigator', {screen: 'Home'});
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={tickitz} style={styles.logo} />
       <Gap height={46} />
       <Text style={styles.title}>Sign In</Text>
@@ -31,17 +31,17 @@ function Login({navigation}) {
       {response.isShow && (
         <MsgResponse msg={response.msg} isSuccess={response.isSuccess} />
       )}
-      <Button title="Sign In" isLoading={false} onPress={handleReset} />
+      <Button title="Sign In" isLoading={false} onPress={handleLogin} />
       <Gap height={32} />
       <Text style={styles.desc}>
         Forgot your password?{' '}
         <Text
           style={styles.link}
-          onPress={() => navigation.navigate('AppNavigator', {screen: 'Home'})}>
+          onPress={() => navigation.navigate('ForgotPassword')}>
           Reset now
         </Text>
       </Text>
-    </View>
+    </ScrollView>
   );
 }
 

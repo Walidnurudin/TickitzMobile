@@ -1,20 +1,29 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import styles from './styles';
+import {StyleSheet, ScrollView} from 'react-native';
+import {Footer} from '../../../components/atoms';
+import {
+  Hero,
+  NowShowing,
+  UpComing,
+  JoinNow,
+} from '../../../components/molecules';
 
 function Home() {
   return (
-    <View>
-      <View style={styles.header}>
-        <View style={{flex: 1}}>
-          <Text>Left side</Text>
-        </View>
-        <View style={{flex: 1}}>
-          <Text>Right side</Text>
-        </View>
-      </View>
-    </View>
+    <ScrollView style={styles.page}>
+      <Hero />
+      <NowShowing />
+      <UpComing />
+      <JoinNow />
+      <Footer />
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: '#fff',
+  },
+});
 
 export default Home;

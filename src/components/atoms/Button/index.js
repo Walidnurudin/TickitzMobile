@@ -16,7 +16,7 @@ function Button({title, onPress, isLoading}) {
     <TouchableOpacity
       onPress={onPress}
       style={styles.container}
-      disabled={true}>
+      disabled={false}>
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   disable: {
-    backgroundColor: colors.third,
+    backgroundColor: 'rgba(0, 0, 0, 0.24)',
     padding: 20,
     borderRadius: 4,
   },
