@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-import {Home, Profile} from '../screen/main';
+import {Home, Profile, Movie, Order, Payment, Ticket} from '../screen/main';
 import {DrawerContent} from '../components/atoms';
 
 function HomeNavigator() {
@@ -15,6 +15,26 @@ function HomeNavigator() {
       <Stack.Screen
         component={Home}
         name="Home"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Movie}
+        name="Movie"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Order}
+        name="Order"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Payment}
+        name="Payment"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Ticket}
+        name="Ticket"
         options={{headerShown: false}}
       />
     </Stack.Navigator>

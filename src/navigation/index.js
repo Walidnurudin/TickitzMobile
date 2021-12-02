@@ -2,8 +2,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-// import Splash from '../screen/Splash';
-import {Home} from '../screen/main';
+import Splash from '../screen/Splash';
+// import {Movie} from '../screen/main';
 
 import AuthNavigator from './auth';
 import AppNavigator from './app';
@@ -15,17 +15,17 @@ function MainStackNavigator(params) {
     <NavigationContainer>
       <Stack.Navigator>
         {/* Testing */}
-        <Stack.Screen
-          component={Home}
-          name="Home"
-          options={{headerShown: false}}
-        />
-
         {/* <Stack.Screen
+          component={Movie}
+          name="Movie"
+          options={{headerShown: false}}
+        /> */}
+
+        <Stack.Screen
           component={Splash}
           name="Splash"
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           component={AuthNavigator}
           name="AuthNavigator"

@@ -10,8 +10,14 @@ import {
 import {def} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
-function UpComing() {
+function UpComing({navigation}) {
   const [data, setData] = useState([1, 2, 3, 4]);
+
+  const toDetail = () => {
+    // alert('hi');
+    navigation.navigate('Movie');
+    // console.log(props);
+  };
 
   return (
     <View style={styles.container}>
@@ -43,7 +49,7 @@ function UpComing() {
               <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
             </View>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={toDetail}>
               <Text style={styles.buttonText}>Details</Text>
             </TouchableOpacity>
           </View>

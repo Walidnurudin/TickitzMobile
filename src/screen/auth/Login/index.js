@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import {Button, Input, Gap, MsgResponse} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 import {tickitz} from '../../../assets/images';
+// import axios from '../../../utils/axios';
 
 function Login({navigation}) {
   const [response, setResponse] = useState({
@@ -12,6 +13,14 @@ function Login({navigation}) {
   });
   const handleLogin = () => {
     navigation.navigate('AppNavigator', {screen: 'Home'});
+    // axios
+    //   .get('/users')
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
 
   return (

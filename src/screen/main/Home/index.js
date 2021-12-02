@@ -8,12 +8,12 @@ import {
   JoinNow,
 } from '../../../components/molecules';
 
-function Home() {
+function Home(props) {
   return (
     <ScrollView style={styles.page}>
       <Hero />
       <NowShowing />
-      <UpComing />
+      <UpComing navigation={props.navigation} />
       <JoinNow />
       <Footer />
     </ScrollView>
