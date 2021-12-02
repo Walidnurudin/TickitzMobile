@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     paddingTop: 75,
     paddingBottom: 65,
     paddingHorizontal: 24,
+    backgroundColor: '#fff',
   },
   image: {
     width: 141,

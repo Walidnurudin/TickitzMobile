@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, ScrollView, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import {Footer} from '../../../components/atoms';
 import {MovieDesc, SceduleCard} from '../../../components/molecules';
 import {colors} from '../../../utils/colors';
@@ -7,7 +14,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
 
 function Movie({navigation}) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
 
   const [openDate, setOpenDate] = useState(false);
@@ -25,11 +32,15 @@ function Movie({navigation}) {
       <View style={styles.shedule}>
         <Text style={styles.title}>Showtimes and Tickets</Text>
 
-        <Button title="Open" onPress={() => setOpen(true)} />
+        <TouchableOpacity onPress={() => setOpen(true)}>
+          <Text>Open</Text>
+        </TouchableOpacity>
+
         <DatePicker
           modal
           open={open}
           date={date}
+          mode="date"
           onConfirm={date => {
             setOpen(false);
             setDate(date);
@@ -39,14 +50,14 @@ function Movie({navigation}) {
           }}
         />
 
-        <DropDownPicker
+        {/* <DropDownPicker
           open={openDate}
           value={value}
           items={items}
           setOpen={setOpenDate}
           setValue={setValue}
           setItems={setItems}
-        />
+        /> */}
 
         <SceduleCard navigation={navigation} />
       </View>
