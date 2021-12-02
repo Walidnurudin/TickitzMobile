@@ -1,13 +1,19 @@
 import React from 'react';
-import {Footer} from '../../../components/atoms';
-import {View, Text, StyleSheet} from 'react-native';
+import {Footer, Button} from '../../../components/atoms';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 
-function Order() {
+function Order({navigation}) {
   return (
-    <View>
-      <Text>Order page</Text>
+    <ScrollView>
+      <View>
+        <Text>Order page</Text>
+        <Button
+          title="Checkout now"
+          onPress={() => navigation.navigate('Payment')}
+        />
+      </View>
       <Footer />
-    </View>
+    </ScrollView>
   );
 }
 

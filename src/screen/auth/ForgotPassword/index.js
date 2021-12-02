@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {ScrollView, Text, StyleSheet, Image} from 'react-native';
 import {Button, Input, Gap, MsgResponse} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 import {tickitz} from '../../../assets/images';
@@ -15,7 +15,7 @@ function ForgotPassword({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={tickitz} style={styles.logo} />
       <Gap height={46} />
       <Text style={styles.title}>Forgot password</Text>
@@ -27,7 +27,7 @@ function ForgotPassword({navigation}) {
         <MsgResponse msg={response.msg} isSuccess={response.isSuccess} />
       )}
       <Button title="Activate Now" isLoading={false} onPress={handleReset} />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 54,
     paddingHorizontal: 24,
+    backgroundColor: '#fff',
   },
   logo: {
     width: 78,
