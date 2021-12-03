@@ -65,12 +65,13 @@ const styles = StyleSheet.create({
     height: 244,
   },
   wrapImage: {
-    justifyContent: 'center',
     padding: 32,
-    backgroundColor: 'red',
+    marginHorizontal: 65,
+    // backgroundColor: 'red',
     borderColor: '#dedede',
     borderWidth: 3,
     borderRadius: 6,
+    alignItems: 'center',
   },
   title: {
     fontWeight: '600',

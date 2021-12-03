@@ -5,5 +5,17 @@ import JoinNow from './JoinNow';
 import MovieDesc from './MovieDesc';
 import SceduleCard from './ScheduleCard';
 import OrderInfo from './OrderInfo';
+import PersonalInfo from './PersonalInfo';
+import PaymentMethod from './PaymentMethod';
 
-export {Hero, NowShowing, UpComing, JoinNow, MovieDesc, SceduleCard, OrderInfo};
+export {
+  Hero,
+  NowShowing,
+  UpComing,
+  JoinNow,
+  MovieDesc,
+  SceduleCard,
+  OrderInfo,
+  PersonalInfo,
+  PaymentMethod,
+};

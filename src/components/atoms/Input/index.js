@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {colors} from '../../../utils/colors';
 
 function Input({label, placeholder, value, isPassword, onChange}) {
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>

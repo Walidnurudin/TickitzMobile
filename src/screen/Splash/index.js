@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import {tickitzWhite} from '../../assets/images';
+import {colors} from '../../utils/colors';
 
 function Splash(props) {
   useEffect(() => {
@@ -15,7 +17,10 @@ function Splash(props) {
 
   return (
     <View style={styles.container}>
-      <Text>Splash Screen</Text>
+      <View style={styles.wrapImage}>
+        <Image source={tickitzWhite} style={styles.image} />
+      </View>
+      <Text style={styles.title}>wait, watch, wow!</Text>
     </View>
   );
 }
@@ -25,6 +30,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.primary,
+  },
+  wrapImage: {
+    // width: 150,
+    // height: 150,
+    // resizeMode: 'contain',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '400',
+    lineHeight: 58,
+    color: 'white',
   },
 });
 
