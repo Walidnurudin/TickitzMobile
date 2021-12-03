@@ -7,6 +7,8 @@ import SceduleCard from './ScheduleCard';
 import OrderInfo from './OrderInfo';
 import PersonalInfo from './PersonalInfo';
 import PaymentMethod from './PaymentMethod';
+import UpdatePassword from './UpdatePassword';
+import TicketHistory from './TicketHistory';
 
 export {
   Hero,
@@ -18,4 +20,6 @@ export {
   OrderInfo,
   PersonalInfo,
   PaymentMethod,
+  UpdatePassword,
+  TicketHistory,
 };
