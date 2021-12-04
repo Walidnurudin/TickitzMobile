@@ -6,7 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {UpdatePassword, TicketHistory} from '../../../components/molecules';
+import {
+  UpdatePassword,
+  TicketHistory,
+  UpdateProfile,
+  ProfileComponent,
+} from '../../../components/molecules';
 import {Footer} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 
@@ -43,6 +48,9 @@ function Profile({navigation}) {
         </View>
       ) : (
         <View>
+          <ProfileComponent />
+          <Text style={styles.title}>Account Settings</Text>
+          <UpdateProfile />
           <UpdatePassword />
         </View>
       )}
@@ -53,6 +61,14 @@ function Profile({navigation}) {
 
 const styles = StyleSheet.create({
   container: {},
+  title: {
+    marginTop: 26,
+    marginHorizontal: 24,
+    fontWeight: '600',
+    fontSize: 18,
+    lineHeight: 24,
+    color: colors.black,
+  },
   navbar: {
     paddingHorizontal: 48,
     backgroundColor: '#fff',

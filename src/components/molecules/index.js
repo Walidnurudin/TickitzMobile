@@ -7,6 +7,8 @@ import SceduleCard from './ScheduleCard';
 import OrderInfo from './OrderInfo';
 import PersonalInfo from './PersonalInfo';
 import PaymentMethod from './PaymentMethod';
+import ProfileComponent from './ProfileComponent';
+import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
 import TicketHistory from './TicketHistory';
 
@@ -20,6 +22,8 @@ export {
   OrderInfo,
   PersonalInfo,
   PaymentMethod,
+  ProfileComponent,
+  UpdateProfile,
   UpdatePassword,
   TicketHistory,
 };
