@@ -5,24 +5,34 @@ import {colors} from '../../../utils/colors';
 
 function Input({label, placeholder, value, isPassword, onChange}) {
   const [showPassword, setShowPassword] = useState(false);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
 
       <View style={styles.inputWrap}>
-        <TextInput
-          style={styles.input}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          secureTextEntry={showPassword}
-        />
-        {isPassword && (
-          <Icon
-            style={styles.icon}
-            name={showPassword ? 'eye-slash' : 'eye'}
-            size={20}
-            onPress={() => setShowPassword(!showPassword)}
+        {isPassword ? (
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder={placeholder}
+              value={value}
+              onChangeText={onChange}
+              secureTextEntry={!showPassword}
+            />
+            <Icon
+              style={styles.icon}
+              name={showPassword ? 'eye' : 'eye-slash'}
+              size={20}
+              onPress={() => setShowPassword(!showPassword)}
+            />
+          </>
+        ) : (
+          <TextInput
+            style={styles.input}
+            placeholder={placeholder}
+            value={value}
+            onChangeText={onChange}
           />
         )}
       </View>

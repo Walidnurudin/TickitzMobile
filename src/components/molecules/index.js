@@ -5,6 +5,7 @@ import JoinNow from './JoinNow';
 import MovieDesc from './MovieDesc';
 import SceduleCard from './ScheduleCard';
 import OrderInfo from './OrderInfo';
+import Seat from './Seat';
 import PersonalInfo from './PersonalInfo';
 import PaymentMethod from './PaymentMethod';
 import ProfileComponent from './ProfileComponent';
@@ -20,6 +21,7 @@ export {
   MovieDesc,
   SceduleCard,
   OrderInfo,
+  Seat,
   PersonalInfo,
   PaymentMethod,
   ProfileComponent,

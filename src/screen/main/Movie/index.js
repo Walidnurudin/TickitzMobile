@@ -7,11 +7,12 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import {Footer} from '../../../components/atoms';
+import {Footer, Gap} from '../../../components/atoms';
 import {MovieDesc, SceduleCard} from '../../../components/molecules';
 import {colors} from '../../../utils/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function Movie({navigation}) {
   const [date, setDate] = useState(new Date());
@@ -32,12 +33,17 @@ function Movie({navigation}) {
       <View style={styles.shedule}>
         <Text style={styles.title}>Showtimes and Tickets</Text>
 
-        <TouchableOpacity onPress={() => setOpenDate(true)}>
-          <Text>Open</Text>
+        <TouchableOpacity
+          onPress={() => setOpenDate(true)}
+          style={styles.buttonDate}>
+          <Icon name="calendar" size={20} />
+          <Gap width={50} />
+          <Text>Set a date</Text>
         </TouchableOpacity>
 
         <DatePicker
           textColor="black"
+          style={styles.buttonDate}
           modal
           open={openDate}
           date={date}
@@ -52,6 +58,8 @@ function Movie({navigation}) {
         />
 
         <DropDownPicker
+          style={styles.buttonCity}
+          labelProps="kadal"
           open={openDropdown}
           value={value}
           items={items}
@@ -83,6 +91,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 34,
     textAlign: 'center',
+  },
+  buttonDate: {
+    backgroundColor: '#EFF0F6',
+    paddingVertical: 20,
+    paddingHorizontal: 26,
+    borderRadius: 10,
+    marginTop: 24,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonCity: {
+    backgroundColor: 'background: rgba(239, 240, 246, 1)',
+    marginBottom: 48,
   },
 });
 

@@ -9,14 +9,13 @@ import {
 } from 'react-native';
 import {def} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
+import {URL_BACKEND} from '@env';
 
-function UpComing({navigation}) {
-  const [data, setData] = useState([1, 2, 3, 4]);
+function UpComing({data, navigation}) {
+  const [dataMonth, setDataMonth] = useState([1, 2, 3, 4]);
 
   const toDetail = () => {
-    // alert('hi');
     navigation.navigate('Movie');
-    // console.log(props);
   };
 
   return (
@@ -30,7 +29,7 @@ function UpComing({navigation}) {
         style={styles.month}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
-        {data.map(item => (
+        {dataMonth.map(item => (
           <View key={item} style={styles.monthWrap}>
             <Text style={styles.monthItem}>September</Text>
           </View>
@@ -41,19 +40,37 @@ function UpComing({navigation}) {
         style={styles.content}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
-        {data.map(item => (
-          <View key={item} style={styles.wrapImage}>
-            <Image style={styles.image} source={def} />
-            <View style={styles.wrapDesc}>
-              <Text style={styles.title}>Black Widow</Text>
-              <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-            </View>
+        {data.length > 0 ? (
+          <>
+            {data.map(item => (
+              <View key={item.id} style={styles.wrapImage}>
+                <Image
+                  style={styles.image}
+                  source={
+                    item.image
+                      ? // ? `${URL_BACKEND}/uploads/movie/${item.image}`
+                        {
+                          uri: `http://192.168.0.104:3001/uploads/movie/${item.image}`,
+                        }
+                      : def
+                  }
+                />
+                <View style={styles.wrapDesc}>
+                  <Text style={styles.title}>{item.name}</Text>
+                  <Text style={styles.category}>{item.category}</Text>
+                </View>
 
-            <TouchableOpacity style={styles.button} onPress={toDetail}>
-              <Text style={styles.buttonText}>Details</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+                <TouchableOpacity style={styles.button} onPress={toDetail}>
+                  <Text style={styles.buttonText}>Details</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </>
+        ) : (
+          <>
+            <Text>no movies</Text>
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -116,6 +133,7 @@ const styles = StyleSheet.create({
     padding: 16,
     width: 122,
     height: 185,
+    // resizeMode: 'contain',
   },
   wrapDesc: {
     width: 122,

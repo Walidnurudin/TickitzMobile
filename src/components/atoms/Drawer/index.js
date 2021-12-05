@@ -1,14 +1,36 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-
 import Icon from 'react-native-vector-icons/Feather';
+import axios from '../../../utils/axios';
 
 class DrawerContent extends React.Component {
+  handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure want to logout?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Logout',
+        onPress: () => {
+          axios
+            .post('/auth/logout')
+            .then(res => {
+              console.log(res);
+              this.props.navigation.navigate('AuthNavigator', {
+                screen: 'Login',
+              });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        },
+      },
+    ]);
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -28,7 +50,7 @@ class DrawerContent extends React.Component {
             icon={({color, size}) => (
               <Icon color={color} size={size} name="log-out" />
             )}
-            onPress={() => alert('Logged out')}
+            onPress={this.handleLogout}
           />
         </View>
       </View>

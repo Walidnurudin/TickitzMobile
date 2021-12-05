@@ -53,13 +53,28 @@ function ProfileNavigator() {
   );
 }
 
+// import {View, Text} from 'react-native';
+
+// function HeaderCostum() {
+//   return (
+//     <View>
+//       <Text>Tes</Text>
+//     </View>
+//   );
+// }
+
 function AppNavigator() {
   return (
-    <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+    <Drawer.Navigator
+      // screenOptions={props => <HeaderCostum {...props} />}
+      drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen
         component={HomeNavigator}
         name="HomeNavigator"
         options={{
+          // drawerPosition: 'right',
+          // drawerType: 'front',
+
           title: 'Home',
           drawerIcon: ({size, color}) => (
             <Icon name="home" size={size} color={color} />
@@ -70,6 +85,7 @@ function AppNavigator() {
         component={ProfileNavigator}
         name="ProfileNavigator"
         options={{
+          // drawerPosition: 'right',
           title: 'Profile',
           drawerIcon: ({size, color}) => (
             <Icon name="user" size={size} color={color} />

@@ -1,19 +1,23 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL_BACKEND} from '@env';
 
 const axiosApiIntaces = axios.create({
-  baseURL: URL_BACKEND,
+  // baseURL: URL_BACKEND,
+  baseURL: 'http://192.168.0.104:3001',
 });
 
 // Add a request interceptor
 axiosApiIntaces.interceptors.request.use(
-  function (config) {
+  async function (config) {
     // Do something before request is sent
 
+    const token = await AsyncStorage.getItem('token');
+
     // ======
-    // config.headers = {
-    //   Authorization: `Bearer ${localStorage.getItem("token")}`
-    // };
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
     // ======
     return config;

@@ -5,7 +5,7 @@ import {ebvid} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
 function SceduleCard({navigation}) {
-  const [time, setTime] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  const [time, setTime] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
 
   return (
     <View style={styles.container}>
@@ -16,25 +16,15 @@ function SceduleCard({navigation}) {
         </Text>
       </View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingTop: 16,
-          paddingBottom: 24,
-        }}>
+      <View style={styles.wrapTime}>
         {time.map(item => (
-          <Text key={item} style={{}}>
+          <Text key={item} style={styles.time}>
             08:30
           </Text>
         ))}
       </View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 24,
-        }}>
+      <View style={styles.wrapInfo}>
         <Text style={styles.price}>Price</Text>
         <Text style={styles.seat}>$10.00/seat</Text>
       </View>
@@ -66,6 +56,26 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
     borderBottomColor: '#dedede',
     borderBottomWidth: 1,
+  },
+  wrapTime: {
+    flexDirection: 'row',
+    paddingTop: 16,
+    paddingBottom: 24,
+    flexWrap: 'wrap',
+  },
+  time: {
+    // backgroundColor: 'red',
+    marginHorizontal: 8,
+    marginVertical: 4,
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 23,
+    color: colors.black,
+  },
+  wrapInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 24,
   },
   price: {
     fontWeight: '400',
