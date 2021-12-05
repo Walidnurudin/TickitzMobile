@@ -61,6 +61,7 @@ function Login({navigation}) {
 
   return (
     <ScrollView style={styles.container}>
+      <Gap height={54} />
       <Image source={tickitz} style={styles.logo} />
       <Gap height={46} />
       <Text style={styles.title}>Sign In</Text>
@@ -95,14 +96,22 @@ function Login({navigation}) {
           Reset now
         </Text>
       </Text>
+      <Gap height={10} />
+      <Text style={styles.desc}>
+        Don't have an account?{' '}
+        <Text
+          style={styles.link}
+          onPress={() => navigation.navigate('Register')}>
+          Sign Up
+        </Text>
+      </Text>
+      <Gap height={54} />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 54,
     paddingHorizontal: 24,
     backgroundColor: '#fff',
   },
