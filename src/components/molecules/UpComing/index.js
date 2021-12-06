@@ -50,7 +50,8 @@ function UpComing({data, navigation}) {
                     item.image
                       ? // ? `${URL_BACKEND}/uploads/movie/${item.image}`
                         {
-                          uri: `http://192.168.0.104:3001/uploads/movie/${item.image}`,
+                          uri: `${URL_BACKEND}/uploads/movie/${item.image}`,
+                          // uri: `http://192.168.43.155:3001/uploads/movie/${item.image}`,
                         }
                       : def
                   }

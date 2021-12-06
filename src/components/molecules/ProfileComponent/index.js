@@ -3,8 +3,9 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import {def} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {URL_BACKEND} from '@env';
 
-function ProfileComponent() {
+function ProfileComponent({name, image, role}) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -14,12 +15,15 @@ function ProfileComponent() {
         </View>
 
         <View style={styles.wrapImage}>
-          <Image source={def} style={styles.image} />
+          <Image
+            source={image ? {uri: `${URL_BACKEND}/uploads/user/${image}`} : def}
+            style={styles.image}
+          />
         </View>
 
         <View style={styles.wrapInfo}>
-          <Text style={styles.name}>Walid Nurudin</Text>
-          <Text style={styles.title}>User</Text>
+          <Text style={styles.name}>{name || '-'}</Text>
+          <Text style={styles.title}>{role || '-'}</Text>
         </View>
       </View>
     </View>
@@ -46,6 +50,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
+    resizeMode: 'contain',
   },
   wrapInfo: {
     marginTop: 32,

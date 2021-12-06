@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
 import axios from '../../../utils/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class DrawerContent extends React.Component {
   handleLogout = () => {
@@ -14,18 +15,16 @@ class DrawerContent extends React.Component {
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Logout',
-        onPress: () => {
-          axios
-            .post('/auth/logout')
-            .then(res => {
-              console.log(res);
-              this.props.navigation.navigate('AuthNavigator', {
-                screen: 'Login',
-              });
-            })
-            .catch(err => {
-              console.log(err);
+        onPress: async () => {
+          try {
+            await axios.post('/auth/logout');
+            await AsyncStorage.removeItem('token');
+            this.props.navigation.navigate('AuthNavigator', {
+              screen: 'Login',
             });
+          } catch (error) {
+            console.log(error);
+          }
         },
       },
     ]);

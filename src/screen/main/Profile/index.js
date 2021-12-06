@@ -15,8 +15,100 @@ import {
 import {Footer} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 
+// REDUX
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  updatePassword,
+  updateUser,
+  getUser,
+} from '../../../stores/actions/user';
+
 function Profile({navigation}) {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const [isHistory, setIsHistory] = useState(false);
+
+  const [profile, setProfile] = useState({
+    firstName: user.data.firstName,
+    lastName: user.data.lastName,
+    email: user.data.email,
+    phoneNumber: user.data.phoneNumber,
+  });
+  const [responseProfile, setResponseProfile] = useState({
+    isShow: false,
+    msg: '',
+    loading: false,
+  });
+
+  const [password, setPassword] = useState({
+    newPassword: '',
+    confirmPassword: '',
+  });
+  const [responsePassword, setResponsePassword] = useState({
+    isShow: false,
+    msg: '',
+    loading: false,
+  });
+
+  // PROFILE
+  const handleProfile = (value, field) => {
+    setProfile({...profile, [field]: value});
+  };
+
+  const handleProfileSubmit = () => {
+    setResponseProfile({...responseProfile, loading: true});
+    dispatch(updateUser(profile))
+      .then(res => {
+        alert('Success update profile');
+        setResponseProfile({...responseProfile, loading: false});
+        dispatch(getUser());
+      })
+      .catch(err => {
+        setResponseProfile({
+          msg: err.response.data.msg,
+          isShow: true,
+          loading: false,
+        });
+
+        setTimeout(() => {
+          setResponseProfile({
+            ...responseProfile,
+            msg: '',
+            isShow: false,
+          });
+        }, 3000);
+      });
+  };
+
+  // PASSWORD
+  const handlePassword = (value, field) => {
+    setPassword({...password, [field]: value});
+  };
+
+  const handlePasswordSubmit = () => {
+    setResponsePassword({...responsePassword, loading: true});
+    dispatch(updatePassword(password))
+      .then(res => {
+        alert('Success update password');
+        setResponsePassword({...responsePassword, loading: false});
+        dispatch(getUser());
+      })
+      .catch(err => {
+        setResponsePassword({
+          msg: err.response.data.msg,
+          isShow: true,
+          loading: false,
+        });
+
+        setTimeout(() => {
+          setResponsePassword({
+            ...responsePassword,
+            msg: '',
+            isShow: false,
+          });
+        }, 3000);
+      });
+  };
 
   return (
     <ScrollView
@@ -48,10 +140,30 @@ function Profile({navigation}) {
         </View>
       ) : (
         <View>
-          <ProfileComponent />
+          <ProfileComponent
+            name={`${user.data.firstName} ${user.data.lastName}`}
+            role={user.data.role}
+            image={user.data.image}
+          />
           <Text style={styles.title}>Account Settings</Text>
-          <UpdateProfile />
-          <UpdatePassword />
+          <UpdateProfile
+            firstName={profile.firstName}
+            lastName={profile.lastName}
+            email={profile.email}
+            phoneNumber={profile.phoneNumber}
+            onChange={(value, field) => handleProfile(value, field)}
+            onPress={handleProfileSubmit}
+            isLoading={responseProfile.loading}
+            showError={responseProfile.isShow}
+            msgError={responseProfile.msg}
+          />
+          <UpdatePassword
+            onChange={(value, field) => handlePassword(value, field)}
+            onPress={handlePasswordSubmit}
+            isLoading={responsePassword.loading}
+            showError={responsePassword.isShow}
+            msgError={responsePassword.msg}
+          />
         </View>
       )}
       <Footer />

@@ -8,19 +8,19 @@ import {
   JoinNow,
 } from '../../../components/molecules';
 import axios from '../../../utils/axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {getUser} from '../../../stores/actions/user';
 
 function Home(props) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+
   const [dataMovies, setDataMovies] = useState([]);
 
-  const getUser = () => {
-    axios
-      .get('/user')
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
+  const getDataUser = () => {
+    dispatch(getUser()).then(res => {
+      console.log(res, 'GET USER REDUX');
+    });
   };
 
   const getMovies = () => {
@@ -36,7 +36,7 @@ function Home(props) {
   };
 
   useEffect(() => {
-    getUser();
+    getDataUser();
     getMovies();
   }, []);
 

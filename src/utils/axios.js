@@ -3,8 +3,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL_BACKEND} from '@env';
 
 const axiosApiIntaces = axios.create({
-  // baseURL: URL_BACKEND,
-  baseURL: 'http://192.168.0.104:3001',
+  baseURL: URL_BACKEND,
+  // baseURL: 'http://192.168.0.104:3001',
+  // baseURL: 'http://192.168.43.155:3001',
 });
 
 // Add a request interceptor

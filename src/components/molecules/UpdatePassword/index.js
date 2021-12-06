@@ -2,8 +2,9 @@ import React from 'react';
 import {Button, Input, Gap} from '../../atoms';
 import {View, Text, StyleSheet} from 'react-native';
 import {colors} from '../../../utils/colors';
+import {MsgResponse} from '../../atoms';
 
-function UpdatePassword() {
+function UpdatePassword({onChange, onPress, isLoading, showError, msgError}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Account and Privacy</Text>
@@ -13,15 +14,18 @@ function UpdatePassword() {
         label="New Password"
         placeholder="Write new passowrd"
         isPassword={true}
+        onChange={value => onChange(value, 'newPassword')}
       />
       <Gap height={25} />
       <Input
         label="Confirm Password"
         placeholder="Write confirm password"
         isPassword={true}
+        onChange={value => onChange(value, 'confirmPassword')}
       />
       <Gap height={48} />
-      <Button title="Update changes" />
+      {showError && <MsgResponse msg={msgError} />}
+      <Button title="Update changes" onPress={onPress} isLoading={isLoading} />
     </View>
   );
 }

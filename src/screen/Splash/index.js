@@ -2,17 +2,18 @@ import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {tickitzWhite} from '../../assets/images';
 import {colors} from '../../utils/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Splash(props) {
   useEffect(() => {
-    const token = false;
+    const token = AsyncStorage.getItem('token');
     setTimeout(() => {
       if (token) {
         props.navigation.navigate('AppNavigator');
       } else {
         props.navigation.navigate('AuthNavigator');
       }
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (
