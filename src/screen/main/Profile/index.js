@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import {
   updatePassword,
   updateUser,
   getUser,
+  updateImage,
 } from '../../../stores/actions/user';
 
 function Profile({navigation}) {
@@ -126,8 +127,40 @@ function Profile({navigation}) {
 
     launchImageLibrary({}, res => {
       console.log('response', res);
+      if (res.didCancel) {
+      } else if (res.assets) {
+        setImage({image: res.assets[0]});
+      } else {
+        console.log(res);
+      }
     });
   };
+
+  // const handleImageSubmit = () => {
+  //   console.log('SUBMIT IMAGE', image);
+  //   if (image === null || !image.image) {
+  //   } else {
+  //     const formData = new FormData();
+  //     for (const data in image) {
+  //       formData.append(data, image[data]);
+  //     }
+
+  //     console.log(formData);
+
+  //     dispatch(updateImage(formData))
+  //       .then(res => {
+  //         console.log('RES', res);
+  //         dispatch(getUser());
+  //       })
+  //       .catch(err => {
+  //         console.log('ERROR', err);
+  //       });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleImageSubmit();
+  // }, [image]);
 
   return (
     <ScrollView

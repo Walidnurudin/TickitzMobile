@@ -14,8 +14,8 @@ import {URL_BACKEND} from '@env';
 function UpComing({data, navigation}) {
   const [dataMonth, setDataMonth] = useState([1, 2, 3, 4]);
 
-  const toDetail = () => {
-    navigation.navigate('Movie');
+  const toDetail = id => {
+    navigation.navigate('Movie', {params: {idMovie: id}});
   };
 
   return (
@@ -61,7 +61,9 @@ function UpComing({data, navigation}) {
                   <Text style={styles.category}>{item.category}</Text>
                 </View>
 
-                <TouchableOpacity style={styles.button} onPress={toDetail}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => toDetail(item.id)}>
                   <Text style={styles.buttonText}>Details</Text>
                 </TouchableOpacity>
               </View>

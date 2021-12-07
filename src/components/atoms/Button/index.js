@@ -7,16 +7,16 @@ import {
 } from 'react-native';
 import {colors} from '../../../utils/colors';
 
-function Button({title, onPress, isLoading}) {
+function Button({title, onPress, isLoading, disabled}) {
   return isLoading ? (
     <TouchableOpacity onPress={onPress} style={styles.disable} disabled={true}>
       <ActivityIndicator style={styles.spinner} color={colors.primary} />
     </TouchableOpacity>
   ) : (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPress}
-      style={styles.container}
-      disabled={false}>
+      style={disabled ? styles.disable : styles.container}>
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );

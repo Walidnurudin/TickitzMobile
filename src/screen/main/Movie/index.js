@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,9 @@ import {colors} from '../../../utils/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from '../../../utils/axios';
 
-function Movie({navigation}) {
-  const [date, setDate] = useState(new Date());
+function Movie({navigation, route}) {
   const [openDate, setOpenDate] = useState(false);
 
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -25,9 +25,74 @@ function Movie({navigation}) {
     {label: 'Banana', value: 'banana'},
   ]);
 
+  const [params, setParams] = useState({
+    page: 1,
+    limit: 3,
+    movieId: route.params.params.idMovie,
+  });
+  const [dataMovie, setDataMovie] = useState({});
+  const [dataSchedule, setDataSchedule] = useState({
+    data: [],
+    pagination: {},
+  });
+  const [tempData, setTempData] = useState({
+    movieId: route.params.params.idMovie,
+    scheduleId: '',
+    timeSchedule: '',
+    dateSchedule: new Date(),
+  });
+
+  const getMovieById = () => {
+    axios
+      .get(`/movie/${params.movieId}`)
+      .then(res => {
+        console.log(res);
+        setDataMovie(res.data.data[0]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const getScheduleByIdMovie = () => {
+    axios
+      .get(
+        `/schedule?page=${params.page}&limit=${
+          params.limit
+        }&searchLocation=${''}&searchMovieId=${params.movieId}`,
+      )
+      .then(res => {
+        console.log(res.data);
+        setDataSchedule({data: res.data.data, pagination: res.data.pagination});
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  };
+
+  const onTime = (time, scheduleId) => {
+    console.log(time, scheduleId);
+    setTempData({...tempData, timeSchedule: time, scheduleId: scheduleId});
+  };
+
+  const onBook = () => {
+    navigation.navigate('Order', {
+      params: {
+        ...tempData,
+        dateSchedule: tempData.dateSchedule.toString(),
+      },
+    });
+    console.log({...tempData, dateSchedule: tempData.dateSchedule.toString()});
+  };
+
+  useEffect(() => {
+    getMovieById();
+    getScheduleByIdMovie();
+  }, []);
+
   return (
     <ScrollView style={styles.page}>
-      <MovieDesc />
+      <MovieDesc data={dataMovie} />
 
       {/* SCHEDULE SECTION */}
       <View style={styles.shedule}>
@@ -46,11 +111,18 @@ function Movie({navigation}) {
           style={styles.buttonDate}
           modal
           open={openDate}
-          date={date}
+          date={tempData.dateSchedule}
           mode="date"
           onConfirm={date => {
-            setOpenDate(false);
-            setDate(date);
+            const newDate = date.toISOString().split('T')[0];
+            const Now = new Date().toISOString().split('T')[0];
+            if (Now > newDate) {
+              setOpenDate(false);
+              alert('error');
+            } else {
+              setOpenDate(false);
+              setTempData({...tempData, dateSchedule: newDate});
+            }
           }}
           onCancel={() => {
             setOpenDate(false);
@@ -59,7 +131,7 @@ function Movie({navigation}) {
 
         <DropDownPicker
           style={styles.buttonCity}
-          labelProps="kadal"
+          labelProps="Select item"
           open={openDropdown}
           value={value}
           items={items}
@@ -68,7 +140,25 @@ function Movie({navigation}) {
           setItems={setItems}
         />
 
-        <SceduleCard navigation={navigation} />
+        {dataSchedule.data.length > 0 ? (
+          <>
+            {dataSchedule.data.map(item => (
+              <SceduleCard
+                navigation={navigation}
+                data={item}
+                key={item.id}
+                scheduleId={tempData.scheduleId}
+                timeSchedule={tempData.timeSchedule}
+                onTime={(time, scheduleId) => onTime(time, scheduleId)}
+                onBook={onBook}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+            <Text>Ga ada coy</Text>
+          </>
+        )}
       </View>
       <Footer />
     </ScrollView>

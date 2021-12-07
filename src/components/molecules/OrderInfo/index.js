@@ -1,37 +1,55 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {cineone21, hiflix} from '../../../assets/images';
+import {cineone21, hiflix, ebvid} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
-function OrderInfo() {
+function OrderInfo({
+  dataMovie,
+  dataSchedule,
+  dateSchedule,
+  timeSchedule,
+  seat,
+  total,
+}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Order Info</Text>
 
       <View style={styles.card}>
         <View style={styles.header}>
-          <Image style={styles.image} source={cineone21} />
-          <Text style={styles.premiere}>CineOne21 Cinema</Text>
-          <Text style={styles.movie}>Spider-Man: Homecoming</Text>
+          <Image
+            style={styles.image}
+            source={
+              dataSchedule.premire === 'hiflix'
+                ? hiflix
+                : dataSchedule.premire === 'cineone21'
+                ? cineone21
+                : ebvid
+            }
+          />
+          <Text style={styles.premiere}>{dataMovie.premiere} Cinema</Text>
+          <Text style={styles.movie}>{dataMovie.name}</Text>
         </View>
 
         <View style={styles.content}>
           <View style={styles.wrapField}>
-            <Text style={styles.field}>Tuesday, 07 July 2020</Text>
-            <Text style={styles.value}>02:00pm</Text>
+            <Text style={styles.field}>{dateSchedule || '-'}</Text>
+            <Text style={styles.value}>{timeSchedule || '-'}</Text>
           </View>
           <View style={styles.wrapField}>
             <Text style={styles.field}>One ticket price</Text>
-            <Text style={styles.value}>$10</Text>
+            <Text style={styles.value}>${dataSchedule.price || '-'}</Text>
           </View>
           <View style={styles.wrapField}>
             <Text style={styles.field}>Seat choosed</Text>
-            <Text style={styles.value}>C4, C5, C6</Text>
+            <Text style={styles.value}>{seat.length ? seat : '-'}</Text>
           </View>
 
           <View style={styles.payment}>
             <Text style={styles.total}>Total Payment</Text>
-            <Text style={styles.price}>$30</Text>
+            <Text style={styles.price}>
+              ${seat.length * dataSchedule.price || 0}
+            </Text>
           </View>
         </View>
       </View>

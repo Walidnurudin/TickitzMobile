@@ -1,35 +1,59 @@
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button} from '../../atoms';
-import {ebvid} from '../../../assets/images';
+import {ebvid, hiflix, cineone21} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
-function SceduleCard({navigation}) {
-  const [time, setTime] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
-
+function SceduleCard({onBook, onTime, data, scheduleId, timeSchedule}) {
   return (
     <View style={styles.container}>
       <View style={styles.wrapImage}>
-        <Image source={ebvid} style={styles.image} />
-        <Text style={styles.address}>
-          Whatever street No.12, South Purwokerto
-        </Text>
+        <Image
+          source={
+            data.premire === 'hiflix'
+              ? hiflix
+              : data.premire === 'cineone21'
+              ? cineone21
+              : ebvid
+          }
+          style={styles.image}
+        />
+        <Text style={styles.address}>{data.location || '-'}</Text>
       </View>
 
       <View style={styles.wrapTime}>
-        {time.map(item => (
-          <Text key={item} style={styles.time}>
-            08:30
-          </Text>
+        {data.time?.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={
+              data.id === scheduleId && item === timeSchedule
+                ? styles.timeActive
+                : styles.time
+            }
+            onPress={() => onTime(item, data.id)}>
+            <Text
+              style={{
+                color:
+                  data.id === scheduleId && item === timeSchedule
+                    ? 'white'
+                    : colors.black,
+              }}>
+              {item}
+            </Text>
+          </TouchableOpacity>
         ))}
       </View>
 
       <View style={styles.wrapInfo}>
         <Text style={styles.price}>Price</Text>
-        <Text style={styles.seat}>$10.00/seat</Text>
+        <Text style={styles.seat}>${data.price}/seat</Text>
       </View>
 
-      <Button title="Book now" onPress={() => navigation.navigate('Order')} />
+      <Button
+        title="Book now"
+        onPress={onBook}
+        disabled={scheduleId !== data.id}
+      />
     </View>
   );
 }
@@ -50,6 +74,8 @@ const styles = StyleSheet.create({
   },
   address: {
     fontWeight: '300',
+    width: '100%',
+    textAlign: 'center',
     fontSize: 13,
     lineHeight: 22,
     color: colors.third,
@@ -70,7 +96,17 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     lineHeight: 23,
-    color: colors.black,
+    padding: 5,
+  },
+  timeActive: {
+    backgroundColor: colors.primary,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 23,
+    borderRadius: 5,
+    padding: 5,
   },
   wrapInfo: {
     flexDirection: 'row',
