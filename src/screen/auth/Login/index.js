@@ -35,6 +35,7 @@ function Login({navigation}) {
       .post('/auth/login', data)
       .then(res => {
         AsyncStorage.setItem('token', res.data.data.token);
+        AsyncStorage.setItem('token', res.data.data.refreshToken);
         navigation.navigate('AppNavigator', {screen: 'Home'});
         setResponse({
           ...response,

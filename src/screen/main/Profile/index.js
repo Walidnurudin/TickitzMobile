@@ -14,6 +14,7 @@ import {
 } from '../../../components/molecules';
 import {Footer} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 // REDUX
 import {useSelector, useDispatch} from 'react-redux';
@@ -45,6 +46,15 @@ function Profile({navigation}) {
     confirmPassword: '',
   });
   const [responsePassword, setResponsePassword] = useState({
+    isShow: false,
+    msg: '',
+    loading: false,
+  });
+
+  const [image, setImage] = useState({
+    image: null,
+  });
+  const [responseImage, setResponseImage] = useState({
     isShow: false,
     msg: '',
     loading: false,
@@ -110,6 +120,15 @@ function Profile({navigation}) {
       });
   };
 
+  // IMAGE
+  const handleImage = () => {
+    console.log('Launch');
+
+    launchImageLibrary({}, res => {
+      console.log('response', res);
+    });
+  };
+
   return (
     <ScrollView
       style={styles.container}
@@ -141,6 +160,7 @@ function Profile({navigation}) {
       ) : (
         <View>
           <ProfileComponent
+            onPress={handleImage}
             name={`${user.data.firstName} ${user.data.lastName}`}
             role={user.data.role}
             image={user.data.image}

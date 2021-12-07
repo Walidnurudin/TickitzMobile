@@ -5,8 +5,9 @@ import {colors} from '../../utils/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Splash(props) {
-  useEffect(() => {
-    const token = AsyncStorage.getItem('token');
+  const checkToken = async () => {
+    const token = await AsyncStorage.getItem('token');
+    console.log('TOKEN', token);
     setTimeout(() => {
       if (token) {
         props.navigation.navigate('AppNavigator');
@@ -14,6 +15,10 @@ function Splash(props) {
         props.navigation.navigate('AuthNavigator');
       }
     }, 3000);
+  };
+
+  useEffect(() => {
+    checkToken();
   }, []);
 
   return (

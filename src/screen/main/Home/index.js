@@ -10,6 +10,7 @@ import {
 import axios from '../../../utils/axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {getUser} from '../../../stores/actions/user';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home(props) {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function Home(props) {
 
   const [dataMovies, setDataMovies] = useState([]);
 
-  const getDataUser = () => {
+  const getDataUser = async () => {
     dispatch(getUser()).then(res => {
       console.log(res, 'GET USER REDUX');
     });

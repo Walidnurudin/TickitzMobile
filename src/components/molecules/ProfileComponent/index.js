@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {def} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {URL_BACKEND} from '@env';
 
-function ProfileComponent({name, image, role}) {
+function ProfileComponent({name, image, role, onPress}) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -13,14 +13,12 @@ function ProfileComponent({name, image, role}) {
           <Text>INFO</Text>
           <Icon name="ellipsis-h" size={20} color={colors.primary} />
         </View>
-
-        <View style={styles.wrapImage}>
+        <TouchableOpacity style={styles.wrapImage} onPress={onPress}>
           <Image
             source={image ? {uri: `${URL_BACKEND}/uploads/user/${image}`} : def}
             style={styles.image}
           />
-        </View>
-
+        </TouchableOpacity>
         <View style={styles.wrapInfo}>
           <Text style={styles.name}>{name || '-'}</Text>
           <Text style={styles.title}>{role || '-'}</Text>

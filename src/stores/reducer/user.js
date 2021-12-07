@@ -58,6 +58,31 @@ const user = (state = initialState, action) => {
         msg: action.payload.response.data.msg,
       };
 
+    // UPDATE IMAGE
+    case 'UPDATE_IMAGE_PENDING':
+      return {
+        ...state,
+        data: '',
+        isLoading: true,
+        isError: false,
+        msg: '',
+      };
+    case 'UPDATE_IMAGE_FULFILLED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        msg: action.payload.data.msg,
+      };
+    case 'UPDATE_IMAGE_REJECTED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: '',
+        msg: action.payload.response.data.msg,
+      };
+
     // UPDATE PASSWORD
     case 'UPDATE_PASSWORD_PENDING':
       return {
