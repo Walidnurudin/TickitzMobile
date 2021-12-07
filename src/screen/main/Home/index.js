@@ -44,7 +44,7 @@ function Home(props) {
   return (
     <ScrollView style={styles.page}>
       <Hero />
-      <NowShowing />
+      <NowShowing navigation={props.navigation} data={dataMovies} />
       <UpComing data={dataMovies} navigation={props.navigation} />
       <JoinNow />
       <Footer />

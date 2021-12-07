@@ -1,10 +1,21 @@
 import React, {useState} from 'react';
-import {ScrollView, View, Text, Image, StyleSheet} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import {def} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
+import {URL_BACKEND} from '@env';
 
-function NowShowing() {
-  const [data, setData] = useState([1, 2, 3, 4]);
+function NowShowing({navigation, data}) {
+  const toDetail = id => {
+    navigation.navigate('Movie', {params: {idMovie: id}});
+  };
 
   return (
     <View style={styles.container}>
@@ -13,7 +24,42 @@ function NowShowing() {
         <Text style={styles.viewAll}>view all</Text>
       </View>
 
-      <ScrollView
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        data={data}
+        contentContainerStyle={styles.content}
+        renderItem={({item}) => (
+          <View key={item.id} style={styles.wrapImage}>
+            <Image
+              style={styles.image}
+              source={
+                item.image
+                  ? // ? `${URL_BACKEND}/uploads/movie/${item.image}`
+                    {
+                      uri: `${URL_BACKEND}/uploads/movie/${item.image}`,
+                      // uri: `http://192.168.43.155:3001/uploads/movie/${item.image}`,
+                    }
+                  : def
+              }
+            />
+
+            <View style={styles.wrapDesc}>
+              <Text style={styles.title}>{item.name}</Text>
+              <Text style={styles.category}>{item.category}</Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => toDetail(item.id)}>
+              <Text style={styles.buttonText}>Details</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        keyExtractor={item => item.id}
+      />
+
+      {/* <ScrollView
         style={styles.content}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
@@ -22,7 +68,7 @@ function NowShowing() {
             <Image style={styles.image} source={def} />
           </View>
         ))}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }
@@ -66,6 +112,33 @@ const styles = StyleSheet.create({
     padding: 16,
     width: 122,
     height: 185,
+  },
+  wrapDesc: {
+    width: 122,
+    alignItems: 'center',
+  },
+  title: {
+    textAlign: 'center',
+    color: colors.black,
+    marginTop: 12,
+  },
+  category: {
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 24,
+  },
+  button: {
+    paddingVertical: 5,
+    paddingHorizontal: 40,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.primary,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '300',
+    color: colors.primary,
   },
 });
 
