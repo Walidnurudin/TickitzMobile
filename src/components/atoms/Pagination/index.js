@@ -17,7 +17,7 @@ function Pagination({totalPage, onPress, currentPage}) {
 
   useEffect(() => {
     convert();
-  }, []);
+  }, [totalPage]);
 
   return (
     <View style={styles.container}>

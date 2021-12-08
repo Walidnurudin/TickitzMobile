@@ -6,7 +6,15 @@ import Icon from 'react-native-vector-icons/Feather';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-import {Home, Profile, Movie, Order, Payment, Ticket} from '../screen/main';
+import {
+  Home,
+  Profile,
+  Movie,
+  Order,
+  Payment,
+  Ticket,
+  Search,
+} from '../screen/main';
 import {DrawerContent} from '../components/atoms';
 
 function HomeNavigator() {
@@ -53,6 +61,18 @@ function ProfileNavigator() {
   );
 }
 
+function SearchNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={Search}
+        name="Search"
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
 // import {View, Text} from 'react-native';
 
 // function HeaderCostum() {
@@ -78,6 +98,17 @@ function AppNavigator() {
           title: 'Home',
           drawerIcon: ({size, color}) => (
             <Icon name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        component={SearchNavigator}
+        name="SearchNavigator"
+        options={{
+          // drawerPosition: 'right',
+          title: 'Search',
+          drawerIcon: ({size, color}) => (
+            <Icon name="search" size={size} color={color} />
           ),
         }}
       />

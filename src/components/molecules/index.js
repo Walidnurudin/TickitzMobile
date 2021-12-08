@@ -12,6 +12,8 @@ import ProfileComponent from './ProfileComponent';
 import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
 import TicketHistory from './TicketHistory';
+import CardMovie from './CardMovie';
+import InputSearch from './InputSearch';
 
 export {
   Hero,
@@ -28,4 +30,6 @@ export {
   UpdateProfile,
   UpdatePassword,
   TicketHistory,
+  CardMovie,
+  InputSearch,
 };
