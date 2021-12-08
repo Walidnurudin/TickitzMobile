@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {View, Text, StyleSheet, Alert, Image} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -8,9 +8,14 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import axios from '../../../utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
+import {URL_BACKEND} from '@env';
+import {def} from '../../../assets/images';
 
-class DrawerContent extends React.Component {
-  handleLogout = () => {
+function DrawerContent(props) {
+  const user = useSelector(state => state.user);
+
+  const handleLogout = () => {
     Alert.alert('Logout', 'Are you sure want to logout?', [
       {text: 'Cancel', style: 'cancel'},
       {
@@ -30,31 +35,42 @@ class DrawerContent extends React.Component {
     ]);
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <DrawerContentScrollView {...this.props}>
-          <View style={styles.containerProfile}>
-            <View style={styles.avatar} />
-            <View style={styles.biodata}>
-              <Text style={styles.title}>Anonymous</Text>
-              <Text style={styles.caption}>@bagustea</Text>
-            </View>
-          </View>
-          <DrawerItemList {...this.props} />
-        </DrawerContentScrollView>
-        <View style={styles.containerSection}>
-          <DrawerItem
-            label="Sign Out"
-            icon={({color, size}) => (
-              <Icon color={color} size={size} name="log-out" />
-            )}
-            onPress={this.handleLogout}
+  return (
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props}>
+        <View style={styles.containerProfile}>
+          <Image
+            source={
+              user.data.image
+                ? // ? `${URL_BACKEND}/uploads/movie/${user.data.image}`
+                  {
+                    uri: `${URL_BACKEND}/uploads/movie/${user.data.image}`,
+                    // uri: `http://192.168.43.155:3001/uploads/movie/${user.data.image}`,
+                  }
+                : def
+            }
+            style={styles.avatar}
           />
+          <View style={styles.biodata}>
+            <Text style={styles.title}>
+              {user.data.firstName} {user.data.lastName}
+            </Text>
+            <Text style={styles.caption}>{user.data.email}</Text>
+          </View>
         </View>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <View style={styles.containerSection}>
+        <DrawerItem
+          label="Sign Out"
+          icon={({color, size}) => (
+            <Icon color={color} size={size} name="log-out" />
+          )}
+          onPress={handleLogout}
+        />
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

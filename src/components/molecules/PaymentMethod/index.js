@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
+import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   gopay,
   google_pay,
@@ -12,7 +12,7 @@ import {
 } from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
-function PaymentMethod() {
+function PaymentMethod({pay, onPress}) {
   const [payment, setPayment] = useState([
     {
       id: 1,
@@ -62,9 +62,14 @@ function PaymentMethod() {
 
       <View style={styles.card}>
         {payment.map(item => (
-          <View style={styles.wrapImage} key={item.id}>
+          <TouchableOpacity
+            onPress={() => onPress(item.name)}
+            style={
+              item.name === pay ? styles.wrapImageActive : styles.wrapImage
+            }
+            key={item.id}>
             <Image source={item.image} style={styles.image} />
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
@@ -94,6 +99,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#dedede',
     margin: 8,
+  },
+  wrapImageActive: {
+    paddingVertical: 9,
+    paddingHorizontal: 18,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#dedede',
+    margin: 8,
+    backgroundColor: 'grey',
   },
   card: {
     flexWrap: 'wrap',

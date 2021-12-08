@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     padding: 32,
     backgroundColor: '#fff',
     borderRadius: 8,
+    marginBottom: 20,
   },
   wrapImage: {
     alignItems: 'center',

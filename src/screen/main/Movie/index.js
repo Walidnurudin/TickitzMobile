@@ -6,8 +6,9 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
-import {Footer, Gap} from '../../../components/atoms';
+import {Footer, Gap, Pagination} from '../../../components/atoms';
 import {MovieDesc, SceduleCard} from '../../../components/molecules';
 import {colors} from '../../../utils/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -21,13 +22,14 @@ function Movie({navigation, route}) {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'},
+    {label: 'Jakarta', value: 'Jakarta'},
+    {label: 'Bandung', value: 'Bandung'},
+    {label: 'Indramayu', value: 'Indramayu'},
   ]);
 
   const [params, setParams] = useState({
     page: 1,
-    limit: 3,
+    limit: 1,
     movieId: route.params.params.idMovie,
   });
   const [dataMovie, setDataMovie] = useState({});
@@ -70,6 +72,26 @@ function Movie({navigation, route}) {
       });
   };
 
+  const handlePagination = item => {
+    setParams({
+      ...params,
+      page: item,
+    });
+
+    axios
+      .get(
+        `/schedule?page=${item}&limit=${
+          params.limit
+        }&searchLocation=${''}&searchMovieId=${params.movieId}`,
+      )
+      .then(res => {
+        setDataSchedule({data: res.data.data, pagination: res.data.pagination});
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  };
+
   const onTime = (time, scheduleId) => {
     console.log(time, scheduleId);
     setTempData({...tempData, timeSchedule: time, scheduleId: scheduleId});
@@ -91,77 +113,84 @@ function Movie({navigation, route}) {
   }, []);
 
   return (
-    <ScrollView style={styles.page}>
-      <MovieDesc data={dataMovie} />
+    <SafeAreaView>
+      <ScrollView style={styles.page}>
+        <MovieDesc data={dataMovie} />
 
-      {/* SCHEDULE SECTION */}
-      <View style={styles.shedule}>
-        <Text style={styles.title}>Showtimes and Tickets</Text>
+        {/* SCHEDULE SECTION */}
+        <View style={styles.shedule}>
+          <Text style={styles.title}>Showtimes and Tickets</Text>
 
-        <TouchableOpacity
-          onPress={() => setOpenDate(true)}
-          style={styles.buttonDate}>
-          <Icon name="calendar" size={20} />
-          <Gap width={50} />
-          <Text>Set a date</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setOpenDate(true)}
+            style={styles.buttonDate}>
+            <Icon name="calendar" size={20} />
+            <Gap width={50} />
+            <Text>Set a date</Text>
+          </TouchableOpacity>
 
-        <DatePicker
-          textColor="black"
-          style={styles.buttonDate}
-          modal
-          open={openDate}
-          date={tempData.dateSchedule}
-          mode="date"
-          onConfirm={date => {
-            const newDate = date.toISOString().split('T')[0];
-            const Now = new Date().toISOString().split('T')[0];
-            if (Now > newDate) {
+          <DatePicker
+            textColor="black"
+            style={styles.buttonDate}
+            modal
+            open={openDate}
+            date={tempData.dateSchedule}
+            mode="date"
+            onConfirm={date => {
+              const newDate = date.toISOString().split('T')[0];
+              const Now = new Date().toISOString().split('T')[0];
+              if (Now > newDate) {
+                setOpenDate(false);
+                alert('error');
+              } else {
+                setOpenDate(false);
+                setTempData({...tempData, dateSchedule: newDate});
+              }
+            }}
+            onCancel={() => {
               setOpenDate(false);
-              alert('error');
-            } else {
-              setOpenDate(false);
-              setTempData({...tempData, dateSchedule: newDate});
-            }
-          }}
-          onCancel={() => {
-            setOpenDate(false);
-          }}
-        />
+            }}
+          />
 
-        <DropDownPicker
-          style={styles.buttonCity}
-          labelProps="Select item"
-          open={openDropdown}
-          value={value}
-          items={items}
-          setOpen={setOpenDropdown}
-          setValue={setValue}
-          setItems={setItems}
-        />
+          <DropDownPicker
+            style={styles.buttonCity}
+            labelProps="Select item"
+            open={openDropdown}
+            value={value}
+            items={items}
+            setOpen={setOpenDropdown}
+            setValue={setValue}
+            setItems={setItems}
+          />
 
-        {dataSchedule.data.length > 0 ? (
-          <>
-            {dataSchedule.data.map(item => (
-              <SceduleCard
-                navigation={navigation}
-                data={item}
-                key={item.id}
-                scheduleId={tempData.scheduleId}
-                timeSchedule={tempData.timeSchedule}
-                onTime={(time, scheduleId) => onTime(time, scheduleId)}
-                onBook={onBook}
+          {dataSchedule.data.length > 0 ? (
+            <>
+              {dataSchedule.data.map(item => (
+                <SceduleCard
+                  navigation={navigation}
+                  data={item}
+                  key={item.id}
+                  scheduleId={tempData.scheduleId}
+                  timeSchedule={tempData.timeSchedule}
+                  onTime={(time, scheduleId) => onTime(time, scheduleId)}
+                  onBook={onBook}
+                />
+              ))}
+              <Pagination
+                totalPage={dataSchedule.pagination.totalPage}
+                onPress={item => handlePagination(item)}
+                currentPage={params.page}
               />
-            ))}
-          </>
-        ) : (
-          <>
-            <Text>Ga ada coy</Text>
-          </>
-        )}
-      </View>
-      <Footer />
-    </ScrollView>
+            </>
+          ) : (
+            <>
+              <Text>Schedule not found</Text>
+            </>
+          )}
+        </View>
+        <Footer />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

@@ -12,7 +12,20 @@ import {colors} from '../../../utils/colors';
 import {URL_BACKEND} from '@env';
 
 function UpComing({data, navigation}) {
-  const [dataMonth, setDataMonth] = useState([1, 2, 3, 4]);
+  const [dataMonth, setDataMonth] = useState([
+    'September',
+    'Ocktober',
+    'November',
+    'December',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+  ]);
 
   const toDetail = id => {
     navigation.navigate('Movie', {params: {idMovie: id}});
@@ -31,7 +44,7 @@ function UpComing({data, navigation}) {
         showsHorizontalScrollIndicator={false}>
         {dataMonth.map(item => (
           <View key={item} style={styles.monthWrap}>
-            <Text style={styles.monthItem}>September</Text>
+            <Text style={styles.monthItem}>{item}</Text>
           </View>
         ))}
       </ScrollView>

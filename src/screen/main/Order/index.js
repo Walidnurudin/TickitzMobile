@@ -38,6 +38,16 @@ function Order({navigation, route}) {
       });
   };
 
+  const toPayment = () => {
+    navigation.navigate('Payment', {
+      params: {
+        ...params,
+        dataSeat,
+        total: dataSeat.length > 0 ? dataSeat * dataSchedule.price : 0,
+      },
+    });
+  };
+
   useEffect(() => {
     getMovieById();
     getScheduleById();
@@ -55,10 +65,7 @@ function Order({navigation, route}) {
         seat={dataSeat}
       />
       <View style={{marginHorizontal: 24, marginTop: 63, marginBottom: 72}}>
-        <Button
-          title="Checkout now"
-          onPress={() => navigation.navigate('Payment')}
-        />
+        <Button title="Checkout now" onPress={() => toPayment()} />
       </View>
       <Footer />
     </ScrollView>
