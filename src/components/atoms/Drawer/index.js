@@ -44,7 +44,7 @@ function DrawerContent(props) {
               user.data.image
                 ? // ? `${URL_BACKEND}/uploads/movie/${user.data.image}`
                   {
-                    uri: `${URL_BACKEND}/uploads/movie/${user.data.image}`,
+                    uri: `${URL_BACKEND}/uploads/user/${user.data.image}`,
                     // uri: `http://192.168.43.155:3001/uploads/movie/${user.data.image}`,
                   }
                 : def
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
   avatar: {
     width: 40,
     height: 40,
-    borderRadius: 40,
-    backgroundColor: 'gray',
+    borderRadius: 20,
+    // backgroundColor: 'gray',
   },
   biodata: {
     marginLeft: 15,

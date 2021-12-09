@@ -19,7 +19,7 @@ import {DrawerContent} from '../components/atoms';
 
 function HomeNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         component={Home}
         name="Home"

@@ -52,9 +52,7 @@ function Profile({navigation}) {
     loading: false,
   });
 
-  const [image, setImage] = useState({
-    image: null,
-  });
+  const [image, setImage] = useState({});
   const [responseImage, setResponseImage] = useState({
     isShow: false,
     msg: '',
@@ -122,27 +120,45 @@ function Profile({navigation}) {
   };
 
   // IMAGE
-  const handleImage = () => {
+  const handleImage = async () => {
     console.log('Launch');
 
-    launchImageLibrary({}, res => {
-      console.log('response', res);
-      if (res.didCancel) {
-      } else if (res.assets) {
-        setImage({image: res.assets[0]});
+    // launchImageLibrary({}, res => {
+    //   console.log('response', res);
+    //   if (res.didCancel) {
+    //   } else if (res.assets) {
+    //     setImage({image: res.assets[0]});
+    //   } else {
+    //     console.log(res);
+    //   }
+    // });
+
+    try {
+      const result = await launchImageLibrary();
+      if (result.didCancel) {
       } else {
-        console.log(res);
+        setImage({
+          uri: result.assets[0].uri,
+          name: result.assets[0].fileName,
+          type: result.assets[0].type,
+        });
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleImageSubmit = () => {
-    console.log('SUBMIT IMAGE', image);
-    if (image === null || !image.image) {
+    if (image === null || !image) {
     } else {
+      const setData = {
+        image: image,
+      };
+      console.log('SUBMIT IMAGE', setData);
+
       const formData = new FormData();
-      for (const data in image) {
-        formData.append(data, image[data]);
+      for (const data in setData) {
+        formData.append(data, setData[data]);
       }
 
       console.log(formData);
@@ -153,7 +169,8 @@ function Profile({navigation}) {
           dispatch(getUser());
         })
         .catch(err => {
-          console.log('ERROR', err);
+          console.log('ERROR', err.response);
+          alert(err.response.data.msg);
         });
     }
   };

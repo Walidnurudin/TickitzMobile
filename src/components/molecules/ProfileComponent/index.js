@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
   },
   wrapInfo: {
     marginTop: 32,
