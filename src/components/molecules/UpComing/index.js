@@ -11,20 +11,20 @@ import {def} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 import {URL_BACKEND} from '@env';
 
-function UpComing({data, navigation}) {
+function UpComing({data, navigation, onPress, month}) {
   const [dataMonth, setDataMonth] = useState([
-    'September',
-    'Ocktober',
-    'November',
-    'December',
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
+    {label: 'September', value: 9},
+    {label: 'Ocktober', value: 10},
+    {label: 'November', value: 11},
+    {label: 'December', value: 12},
+    {label: 'January', value: 1},
+    {label: 'February', value: 2},
+    {label: 'March', value: 3},
+    {label: 'April', value: 4},
+    {label: 'May', value: 5},
+    {label: 'June', value: 6},
+    {label: 'July', value: 7},
+    {label: 'August', value: 8},
   ]);
 
   const toDetail = id => {
@@ -43,9 +43,19 @@ function UpComing({data, navigation}) {
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
         {dataMonth.map(item => (
-          <View key={item} style={styles.monthWrap}>
-            <Text style={styles.monthItem}>{item}</Text>
-          </View>
+          <TouchableOpacity
+            key={item.value}
+            style={
+              month === item.value ? styles.monthWrapActive : styles.monthWrap
+            }
+            onPress={() => onPress(item.value)}>
+            <Text
+              style={
+                month === item.value ? styles.monthItemActive : styles.monthItem
+              }>
+              {item.label}
+            </Text>
+          </TouchableOpacity>
         ))}
       </ScrollView>
 
@@ -133,6 +143,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     color: colors.primary,
+  },
+  monthWrapActive: {
+    paddingVertical: 12,
+    paddingHorizontal: 27,
+    borderRadius: 4,
+    borderWidth: 2,
+    backgroundColor: colors.primary,
+    borderColor: 'white',
+    marginRight: 16,
+  },
+  monthItemActive: {
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 17,
+    color: 'white',
   },
   content: {
     marginLeft: 24,

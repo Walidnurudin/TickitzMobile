@@ -101,10 +101,22 @@ function Movie({navigation, route}) {
     navigation.navigate('Order', {
       params: {
         ...tempData,
-        dateSchedule: tempData.dateSchedule.toString(),
+        dateSchedule: tempData.dateSchedule.toISOString().split('T')[0],
+        // .toString()
+        // .split(' ')
+        // .splice(0, 4)
+        // .join(' '),
       },
     });
-    console.log({...tempData, dateSchedule: tempData.dateSchedule.toString()});
+
+    console.log({
+      ...tempData,
+      dateSchedule: tempData.dateSchedule.toISOString().split('T')[0],
+      // .toString()
+      // .split(' ')
+      // .splice(0, 5)
+      // .join(' '),
+    });
   };
 
   useEffect(() => {
@@ -144,7 +156,10 @@ function Movie({navigation, route}) {
                 alert('error');
               } else {
                 setOpenDate(false);
-                setTempData({...tempData, dateSchedule: newDate});
+                setTempData({
+                  ...tempData,
+                  dateSchedule: date,
+                });
               }
             }}
             onCancel={() => {

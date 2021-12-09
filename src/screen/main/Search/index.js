@@ -11,7 +11,7 @@ import {Footer, Gap, Pagination} from '../../../components/atoms';
 import {CardMovie, InputSearch} from '../../../components/molecules';
 import axios from '../../../utils/axios';
 
-function Search() {
+function Search({navigation}) {
   const [dataMovie, setDataMovie] = useState({
     data: [],
     pagination: {},
@@ -73,6 +73,10 @@ function Search() {
       });
   };
 
+  const toDetail = id => {
+    navigation.navigate('Movie', {params: {idMovie: id}});
+  };
+
   useEffect(() => {
     getMovie();
   }, []);
@@ -88,7 +92,11 @@ function Search() {
         {dataMovie.data.length > 0 ? (
           <>
             {dataMovie.data.map(item => (
-              <CardMovie item={item} />
+              <CardMovie
+                item={item}
+                key={item.id}
+                toDetail={id => toDetail(id)}
+              />
             ))}
             <Gap height={30} />
             <Pagination

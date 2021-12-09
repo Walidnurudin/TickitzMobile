@@ -136,31 +136,31 @@ function Profile({navigation}) {
     });
   };
 
-  // const handleImageSubmit = () => {
-  //   console.log('SUBMIT IMAGE', image);
-  //   if (image === null || !image.image) {
-  //   } else {
-  //     const formData = new FormData();
-  //     for (const data in image) {
-  //       formData.append(data, image[data]);
-  //     }
+  const handleImageSubmit = () => {
+    console.log('SUBMIT IMAGE', image);
+    if (image === null || !image.image) {
+    } else {
+      const formData = new FormData();
+      for (const data in image) {
+        formData.append(data, image[data]);
+      }
 
-  //     console.log(formData);
+      console.log(formData);
 
-  //     dispatch(updateImage(formData))
-  //       .then(res => {
-  //         console.log('RES', res);
-  //         dispatch(getUser());
-  //       })
-  //       .catch(err => {
-  //         console.log('ERROR', err);
-  //       });
-  //   }
-  // };
+      dispatch(updateImage(formData))
+        .then(res => {
+          console.log('RES', res);
+          dispatch(getUser());
+        })
+        .catch(err => {
+          console.log('ERROR', err);
+        });
+    }
+  };
 
-  // useEffect(() => {
-  //   handleImageSubmit();
-  // }, [image]);
+  useEffect(() => {
+    handleImageSubmit();
+  }, [image]);
 
   return (
     <ScrollView

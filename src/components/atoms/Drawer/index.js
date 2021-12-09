@@ -24,7 +24,7 @@ function DrawerContent(props) {
           try {
             await axios.post('/auth/logout');
             await AsyncStorage.removeItem('token');
-            this.props.navigation.navigate('AuthNavigator', {
+            props.navigation.navigate('AuthNavigator', {
               screen: 'Login',
             });
           } catch (error) {

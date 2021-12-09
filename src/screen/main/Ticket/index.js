@@ -1,54 +1,82 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Footer} from '../../../components/atoms';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {colors} from '../../../utils/colors';
 import QRCode from 'react-native-qrcode-svg';
+import {URL_BACKEND} from '@env';
 
-function Ticket() {
+function Ticket({navigation, route}) {
+  const [params, setParams] = useState(route.params.params);
+  const [value, setValue] = useState(
+    `${URL_BACKEND}/booking/used-ticket/${params.bookingId}`,
+  );
+
+  useEffect(() => {
+    console.log(route.params.params);
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.header}>
-            <QRCode value="tickitz" size={186} />
+            <QRCode value={value} size={186} />
           </View>
           <View style={styles.content}>
             <View style={styles.wrapContent}>
               <View style={{flex: 3}}>
                 <Text style={styles.title}>Movie</Text>
-                <Text style={styles.value}>Black Widow</Text>
+                <Text style={styles.value}>{params.name || '-'}</Text>
               </View>
               <View style={{flex: 2}}>
-                <Text style={styles.title}>Category</Text>
-                <Text style={styles.value}>PG-13</Text>
+                <Text style={styles.title}>Premiere</Text>
+                <Text style={styles.value}>{params.premiere || '-'}</Text>
               </View>
             </View>
             <View style={styles.wrapContent}>
               <View style={{flex: 3}}>
                 <Text style={styles.title}>Date</Text>
-                <Text style={styles.value}>07 jul</Text>
+                <Text style={styles.value}>{params.dateSchedule || '-'}</Text>
               </View>
               <View style={{flex: 2}}>
                 <Text style={styles.title}>Time</Text>
-                <Text style={styles.value}>2:00pm</Text>
+                <Text style={styles.value}>{params.timeSchedule || '-'}</Text>
               </View>
             </View>
             <View style={styles.wrapContent}>
               <View style={{flex: 3}}>
                 <Text style={styles.title}>Count</Text>
-                <Text style={styles.value}>3 pcs</Text>
+                <Text style={styles.value}>
+                  {params.dataSeat.length || 0} pcs
+                </Text>
               </View>
               <View style={{flex: 2}}>
                 <Text style={styles.title}>Seats</Text>
-                <Text style={styles.value}>C4, C5, C6</Text>
+                <Text style={styles.value}>
+                  {params.dataSeat.join(',  ') || '-'}
+                </Text>
               </View>
             </View>
 
             <View style={styles.total}>
               <Text style={styles.totalTitle}>Total</Text>
-              <Text style={styles.totalValue}>$30.00</Text>
+              <Text style={styles.totalValue}>${params.total || 0}</Text>
             </View>
           </View>
+        </View>
+
+        <View style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Home')}
+            style={styles.button}>
+            <Text style={styles.buttonText}>back to home</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <Footer />
@@ -117,6 +145,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 28,
     color: colors.black,
+  },
+  button: {
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 6,
+    width: 150,
+    marginTop: 30,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  buttonText: {
+    color: colors.primary,
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 

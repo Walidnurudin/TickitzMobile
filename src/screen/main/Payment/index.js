@@ -3,6 +3,7 @@ import {Footer, Button} from '../../../components/atoms';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {PersonalInfo, PaymentMethod} from '../../../components/molecules';
 import {colors} from '../../../utils/colors';
+import axios from '../../../utils/axios';
 
 function Payment({navigation, route}) {
   const [data, setData] = useState({
@@ -12,6 +13,8 @@ function Payment({navigation, route}) {
     scheduleId: route.params.params.scheduleId,
     timeSchedule: route.params.params.timeSchedule,
     total: route.params.params.total,
+    name: route.params.params.name,
+    premiere: route.params.params.premiere,
     paymentMethod: '',
   });
 
@@ -23,10 +26,28 @@ function Payment({navigation, route}) {
 
   const handlePay = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-    // navigation.navigate('Ticket')
+    axios
+      .post('/booking', {
+        scheduleId: data.scheduleId,
+        dateBooking: data.dateSchedule,
+        timeBooking: data.timeSchedule,
+        paymentMethod: data.paymentMethod,
+        seat: data.dataSeat,
+      })
+      .then(res => {
+        console.log(res.data.data.id);
+        setLoading(false);
+        navigation.navigate('Ticket', {
+          params: {
+            ...data,
+            bookingId: res.data.data.id,
+          },
+        });
+      })
+      .catch(err => {
+        setLoading(false);
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {

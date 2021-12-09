@@ -18,6 +18,9 @@ function Home(props) {
 
   const [dataMovies, setDataMovies] = useState([]);
 
+  const [month, setMonth] = useState(9);
+  const [dataMovieMonth, setDataMovieMonth] = useState([]);
+
   const getDataUser = async () => {
     dispatch(getUser()).then(res => {
       console.log(res, 'GET USER REDUX');
@@ -36,16 +39,48 @@ function Home(props) {
       });
   };
 
+  const getMovieByMonth = () => {
+    axios
+      .get(`/movie?page=&limit=&search=&month=${month}&sort=name ASC`)
+      .then(res => {
+        console.log(res.data.data);
+        setDataMovieMonth(res.data.data);
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  };
+
+  const handleMonth = value => {
+    setMonth(value);
+
+    axios
+      .get(`/movie?page=&limit=&search=&month=${value}&sort=name ASC`)
+      .then(res => {
+        console.log(res.data.data);
+        setDataMovieMonth(res.data.data);
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  };
+
   useEffect(() => {
     getDataUser();
     getMovies();
+    getMovieByMonth();
   }, []);
 
   return (
     <ScrollView style={styles.page}>
       <Hero />
       <NowShowing navigation={props.navigation} data={dataMovies} />
-      <UpComing data={dataMovies} navigation={props.navigation} />
+      <UpComing
+        data={dataMovieMonth}
+        navigation={props.navigation}
+        onPress={value => handleMonth(value)}
+        month={month}
+      />
       <JoinNow />
       <Footer />
     </ScrollView>

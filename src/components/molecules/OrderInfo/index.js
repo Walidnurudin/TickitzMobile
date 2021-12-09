@@ -9,7 +9,6 @@ function OrderInfo({
   dateSchedule,
   timeSchedule,
   seat,
-  total,
 }) {
   return (
     <View style={styles.container}>
@@ -27,7 +26,7 @@ function OrderInfo({
                 : ebvid
             }
           />
-          <Text style={styles.premiere}>{dataMovie.premiere} Cinema</Text>
+          <Text style={styles.premiere}>{dataSchedule.premiere} Cinema</Text>
           <Text style={styles.movie}>{dataMovie.name}</Text>
         </View>
 
@@ -42,7 +41,9 @@ function OrderInfo({
           </View>
           <View style={styles.wrapField}>
             <Text style={styles.field}>Seat choosed</Text>
-            <Text style={styles.value}>{seat.length ? seat : '-'}</Text>
+            <Text style={styles.value}>
+              {seat.length ? seat.join(',  ') : '-'}
+            </Text>
           </View>
 
           <View style={styles.payment}>

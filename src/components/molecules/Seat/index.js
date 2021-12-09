@@ -1,48 +1,109 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {cineone21, hiflix} from '../../../assets/images';
-import {colors} from '../../../utils/colors';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 
-function Seat() {
+function Seat(props) {
+  const [leftSideSeat, setLeftSideSeat] = useState([1, 2, 3, 4, 5, 6, 7]);
+  const [rightSideSeat, setRightSideSeat] = useState([
+    8, 9, 10, 11, 12, 13, 14,
+  ]);
+
+  useEffect(() => {
+    seatAlphabet();
+  }, []);
+
+  const seatAlphabet = () => {
+    const {seatAlphabhet} = props;
+    const leftSide = leftSideSeat.map(item => `${seatAlphabhet}${item}`);
+    const rightSide = rightSideSeat.map(item => `${seatAlphabhet}${item}`);
+    setLeftSideSeat(leftSide);
+    setRightSideSeat(rightSide);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Choose Your Seat</Text>
-
-      <View style={styles.card}>
-        <View style={styles.seat}>
-          <Text>Seat here</Text>
-        </View>
-
-        <View style={styles.seatDesc}>
-          <Text>Seating key</Text>
-        </View>
+    <View style={styles.seatContainer}>
+      <View style={styles.leftSide}>
+        <FlatList
+          horizontal
+          data={leftSideSeat}
+          keyExtractor={item => item}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={[
+                styles.seat,
+                props.reserved.includes(item)
+                  ? styles.seatSold
+                  : props.selected.includes(item)
+                  ? styles.seatSelected
+                  : styles.seatAvailable,
+              ]}
+              onPress={() => {
+                props.reserved.includes(item) ? null : props.selectSeat(item);
+              }}
+            />
+          )}
+        />
+      </View>
+      <View style={styles.centerSide} />
+      <View style={styles.rightSide}>
+        <FlatList
+          horizontal
+          data={rightSideSeat}
+          keyExtractor={item => item}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={[
+                styles.seat,
+                props.reserved.includes(item)
+                  ? styles.seatSold
+                  : props.selected.includes(item)
+                  ? styles.seatSelected
+                  : styles.seatAvailable,
+              ]}
+              onPress={() => {
+                props.reserved.includes(item) ? null : props.selectSeat(item);
+              }}
+            />
+          )}
+        />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
-    marginTop: 32,
-    marginBottom: 26,
+  seatContainer: {
+    marginHorizontal: 7,
+    marginVertical: 3,
+    padding: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  title: {
-    fontWeight: '600',
-    fontSize: 18,
-    lineHeight: 34,
-    color: colors.black,
+  leftSide: {
+    flex: 6,
+    flexDirection: 'row',
   },
-  card: {
-    backgroundColor: '#fff',
-    marginTop: 11,
-    paddingHorizontal: 21,
-    paddingTop: 32,
-    paddingBottom: 23,
-    borderRadius: 6,
+  rightSide: {
+    flex: 6,
+    flexDirection: 'row',
   },
-  seat: {},
-  seatDesc: {},
+  centerSide: {
+    flex: 1,
+  },
+  seat: {
+    width: 16,
+    height: 16,
+    borderRadius: 3,
+    marginHorizontal: 2,
+  },
+  seatAvailable: {
+    backgroundColor: '#d6d8e7',
+  },
+  seatSelected: {
+    backgroundColor: '#5f2eea',
+  },
+  seatSold: {
+    backgroundColor: '#6e7191',
+  },
 });
 
 export default Seat;

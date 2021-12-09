@@ -85,9 +85,7 @@ function SearchNavigator() {
 
 function AppNavigator() {
   return (
-    <Drawer.Navigator
-      // screenOptions={props => <HeaderCostum {...props} />}
-      drawerContent={props => <DrawerContent {...props} />}>
+    <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen
         component={HomeNavigator}
         name="HomeNavigator"
