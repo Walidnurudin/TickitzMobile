@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  PermissionsAndroid,
 } from 'react-native';
 import {
   UpdatePassword,
@@ -157,22 +158,64 @@ function Profile({navigation}) {
   };
 
   // IMAGE
-  const handleImage = async () => {
+  const handleImage = () => {
     console.log('Launch');
+    Alert.alert('Update image', 'Upload image profile', [
+      // GALLERY
+      {
+        text: 'Gallery',
+        onPress: async () => {
+          try {
+            const result = await launchImageLibrary();
+            if (result.didCancel) {
+            } else {
+              handleImageSubmit({
+                uri: result.assets[0].uri,
+                name: result.assets[0].fileName,
+                type: result.assets[0].type,
+              });
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      },
 
-    try {
-      const result = await launchImageLibrary();
-      if (result.didCancel) {
-      } else {
-        handleImageSubmit({
-          uri: result.assets[0].uri,
-          name: result.assets[0].fileName,
-          type: result.assets[0].type,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      // CAMERA
+      {
+        text: 'Camera',
+        onPress: async () => {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: 'App Camera Permission',
+              message: 'App needs access to your camera ',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('Camera permission given');
+            try {
+              const result = await launchCamera();
+              if (result.didCancel) {
+              } else {
+                handleImageSubmit({
+                  uri: result.assets[0].uri,
+                  name: result.assets[0].fileName,
+                  type: result.assets[0].type,
+                });
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            console.log('Camera permission denied');
+          }
+        },
+      },
+    ]);
   };
 
   const handleImageSubmit = data => {
