@@ -5,7 +5,7 @@ import {colors} from '../../../utils/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {URL_BACKEND} from '@env';
 
-function ProfileComponent({name, image, role, onPress}) {
+function ProfileComponent({name, image, role, onPress, handleDelete}) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -18,6 +18,14 @@ function ProfileComponent({name, image, role, onPress}) {
             source={image ? {uri: `${URL_BACKEND}/uploads/user/${image}`} : def}
             style={styles.image}
           />
+          <View style={styles.edit}>
+            <Icon name="edit" size={20} color="white" />
+            <Text style={styles.textEdit}>edit</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleDelete} style={styles.delete}>
+          <Icon name="trash" size={20} color="white" />
+          <Text style={styles.textDelete}>delete</Text>
         </TouchableOpacity>
         <View style={styles.wrapInfo}>
           <Text style={styles.name}>{name || '-'}</Text>
@@ -66,6 +74,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     color: colors.third,
+  },
+  delete: {
+    marginTop: 15,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'red',
+    width: 80,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+  },
+  textDelete: {
+    color: 'white',
+    marginLeft: 5,
+  },
+  edit: {
+    marginTop: 30,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'grey',
+    width: 80,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+  },
+  textEdit: {
+    color: 'white',
+    marginLeft: 5,
   },
 });
 

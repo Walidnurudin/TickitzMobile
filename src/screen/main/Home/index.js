@@ -10,12 +10,10 @@ import {
 import axios from '../../../utils/axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {getUser} from '../../../stores/actions/user';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home(props) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-
   const [dataMovies, setDataMovies] = useState([]);
 
   const [month, setMonth] = useState(9);

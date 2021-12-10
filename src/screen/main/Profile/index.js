@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   UpdatePassword,
@@ -14,6 +15,7 @@ import {
 } from '../../../components/molecules';
 import {Footer} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
+import axios from '../../../utils/axios';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 // REDUX
@@ -52,12 +54,47 @@ function Profile({navigation}) {
     loading: false,
   });
 
-  const [image, setImage] = useState({});
-  const [responseImage, setResponseImage] = useState({
-    isShow: false,
-    msg: '',
-    loading: false,
-  });
+  const [ticket, setTicket] = useState([]);
+
+  // const [responseImage, setResponseImage] = useState({
+  //   isShow: false,
+  //   msg: '',
+  //   loading: false,
+  // });
+
+  // TICKET
+  const getTicket = () => {
+    axios
+      .get('/booking/user-id')
+      .then(res => {
+        let temp = [];
+        let result = res.data.data;
+
+        result.map(item => {
+          axios
+            .get(`/movie/${item.movieId}`)
+            .then(res => {
+              item.nameMovie = res.data.data[0].name;
+              axios
+                .get(`/schedule/${item.scheduleId}`)
+                .then(res => {
+                  item.premiere = res.data.data[0].premiere;
+                  temp.push(item);
+                  setTicket(temp);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   // PROFILE
   const handleProfile = (value, field) => {
@@ -123,21 +160,11 @@ function Profile({navigation}) {
   const handleImage = async () => {
     console.log('Launch');
 
-    // launchImageLibrary({}, res => {
-    //   console.log('response', res);
-    //   if (res.didCancel) {
-    //   } else if (res.assets) {
-    //     setImage({image: res.assets[0]});
-    //   } else {
-    //     console.log(res);
-    //   }
-    // });
-
     try {
       const result = await launchImageLibrary();
       if (result.didCancel) {
       } else {
-        setImage({
+        handleImageSubmit({
           uri: result.assets[0].uri,
           name: result.assets[0].fileName,
           type: result.assets[0].type,
@@ -148,11 +175,11 @@ function Profile({navigation}) {
     }
   };
 
-  const handleImageSubmit = () => {
-    if (image === null || !image) {
+  const handleImageSubmit = data => {
+    if (data === null || !data) {
     } else {
       const setData = {
-        image: image,
+        image: data,
       };
       console.log('SUBMIT IMAGE', setData);
 
@@ -170,20 +197,38 @@ function Profile({navigation}) {
         })
         .catch(err => {
           console.log('ERROR', err.response);
-          alert(err.response.data.msg);
+          Alert.alert('Error', err.response.data.msg);
         });
     }
   };
 
+  const handleDeleteImage = () => {
+    Alert.alert('Delete image', 'Are you sure want to delete this image?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Delete',
+        onPress: () => {
+          dispatch(updateImage({}))
+            .then(res => {
+              console.log('RES', res);
+              dispatch(getUser());
+            })
+            .catch(err => {
+              console.log('ERROR', err.response);
+              Alert.alert('Error', err.response.data.msg);
+            });
+        },
+      },
+    ]);
+  };
+
   useEffect(() => {
-    handleImageSubmit();
-  }, [image]);
+    getTicket();
+    console.log(ticket);
+  }, []);
 
   return (
-    <ScrollView
-      style={styles.container}
-      // stickyHeaderIndices={[0]}
-    >
+    <View>
       <View style={styles.navbar}>
         <TouchableOpacity
           onPress={() => setIsHistory(false)}
@@ -201,43 +246,65 @@ function Profile({navigation}) {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {isHistory ? (
-        <View style={styles.wrapHistory}>
-          <TicketHistory />
-          <TicketHistory />
-        </View>
-      ) : (
-        <View>
-          <ProfileComponent
-            onPress={handleImage}
-            name={`${user.data.firstName} ${user.data.lastName}`}
-            role={user.data.role}
-            image={user.data.image}
-          />
-          <Text style={styles.title}>Account Settings</Text>
-          <UpdateProfile
-            firstName={profile.firstName}
-            lastName={profile.lastName}
-            email={profile.email}
-            phoneNumber={profile.phoneNumber}
-            onChange={(value, field) => handleProfile(value, field)}
-            onPress={handleProfileSubmit}
-            isLoading={responseProfile.loading}
-            showError={responseProfile.isShow}
-            msgError={responseProfile.msg}
-          />
-          <UpdatePassword
-            onChange={(value, field) => handlePassword(value, field)}
-            onPress={handlePasswordSubmit}
-            isLoading={responsePassword.loading}
-            showError={responsePassword.isShow}
-            msgError={responsePassword.msg}
-          />
-        </View>
-      )}
-      <Footer />
-    </ScrollView>
+      <ScrollView
+        style={styles.container}
+        // stickyHeaderIndices={[0]}
+      >
+        {isHistory ? (
+          <View style={styles.wrapHistory}>
+            {ticket.length === 0 ? (
+              <>
+                {ticket.map(item => (
+                  <TicketHistory
+                    premiere={item.premiere}
+                    date={item.dateBooking}
+                    time={item.timeBooking}
+                    name={item.nameMovie}
+                    key={item.id}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                <Text style={{alignSelf: 'center', marginTop: 50}}>
+                  Data order history not found!
+                </Text>
+              </>
+            )}
+          </View>
+        ) : (
+          <View>
+            <ProfileComponent
+              onPress={handleImage}
+              handleDelete={handleDeleteImage}
+              name={`${user.data.firstName} ${user.data.lastName}`}
+              role={user.data.role}
+              image={user.data.image}
+            />
+            <Text style={styles.title}>Account Settings</Text>
+            <UpdateProfile
+              firstName={profile.firstName}
+              lastName={profile.lastName}
+              email={profile.email}
+              phoneNumber={profile.phoneNumber}
+              onChange={(value, field) => handleProfile(value, field)}
+              onPress={handleProfileSubmit}
+              isLoading={responseProfile.loading}
+              showError={responseProfile.isShow}
+              msgError={responseProfile.msg}
+            />
+            <UpdatePassword
+              onChange={(value, field) => handlePassword(value, field)}
+              onPress={handlePasswordSubmit}
+              isLoading={responsePassword.loading}
+              showError={responsePassword.isShow}
+              msgError={responsePassword.msg}
+            />
+          </View>
+        )}
+        <Footer />
+      </ScrollView>
+    </View>
   );
 }
 
@@ -256,7 +323,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    marginBottom: 8,
   },
   navbarWrap: {
     paddingVertical: 16,

@@ -1,19 +1,30 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {cineone21, hiflix} from '../../../assets/images';
+import {cineone21, hiflix, ebvid} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
-function TicketHistory() {
+function TicketHistory({premiere, date, time, name}) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <View>
-          <Image source={cineone21} style={styles.image} />
+          <Image
+            source={
+              premiere === 'hiflix'
+                ? hiflix
+                : premiere === 'cineone21'
+                ? cineone21
+                : ebvid
+            }
+            style={styles.image}
+          />
         </View>
 
         <View style={styles.wrapData}>
-          <Text style={styles.date}>Tuesday, 07 July 2020 - 04:30pm</Text>
-          <Text style={styles.title}>Spider man</Text>
+          <Text style={styles.date}>
+            {date} - {time}
+          </Text>
+          <Text style={styles.title}>{name}</Text>
         </View>
 
         <TouchableOpacity style={styles.buttonActive}>

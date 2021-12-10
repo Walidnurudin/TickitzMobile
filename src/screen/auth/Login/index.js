@@ -36,11 +36,11 @@ function Login({navigation}) {
       .then(res => {
         AsyncStorage.setItem('token', res.data.data.token);
         AsyncStorage.setItem('token', res.data.data.refreshToken);
-        navigation.navigate('AppNavigator', {screen: 'Home'});
         setResponse({
           ...response,
           isLoadingButton: false,
         });
+        navigation.navigate('AppNavigator', {screen: 'Home'});
       })
       .catch(err => {
         setResponse({
