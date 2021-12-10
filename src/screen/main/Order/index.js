@@ -4,6 +4,7 @@ import {OrderInfo, Seat} from '../../../components/molecules';
 import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
 import axios from '../../../utils/axios';
 import {colors} from '../../../utils/colors';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function Order({navigation, route}) {
   // SEAT
@@ -106,6 +107,16 @@ function Order({navigation, route}) {
         <Text style={styles.title}>Choose Your Seat</Text>
 
         <View style={styles.card}>
+          <View
+            style={{
+              height: 5,
+              borderRadius: 5,
+              width: 250,
+              marginBottom: 20,
+              alignSelf: 'center',
+              backgroundColor: colors.primary,
+            }}
+          />
           <FlatList
             data={listSeat}
             keyExtractor={item => item}
@@ -118,23 +129,47 @@ function Order({navigation, route}) {
               />
             )}
           />
+
           <View style={styles.seatDesc}>
-            <Text>Seating key</Text>
+            <Text style={styles.seating}>Seating key</Text>
+
+            <View
+              style={{flexDirection: 'row', marginTop: 16, marginBottom: 10}}>
+              <View style={{flexDirection: 'row', marginRight: 30}}>
+                <Icon name="arrow-down" size={20} />
+                <Text style={{marginLeft: 15}}>A - G</Text>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Icon name="arrow-right" size={20} />
+                <Text style={{marginLeft: 15}}>1 - 14</Text>
+              </View>
+            </View>
 
             <View style={styles.boxDesc}>
               <View style={styles.boxWrap}>
-                <View style={styles.box} />
+                <View
+                  style={[
+                    styles.box,
+                    {backgroundColor: 'rgba(214, 216, 231, 1)'},
+                  ]}
+                />
                 <Text>Available</Text>
               </View>
 
               <View style={styles.boxWrap}>
-                <View style={styles.box} />
-                <Text>Available</Text>
+                <View style={[styles.box, {backgroundColor: colors.primary}]} />
+                <Text>Selected</Text>
               </View>
 
               <View style={styles.boxWrap}>
-                <View style={styles.box} />
-                <Text>Available</Text>
+                <View
+                  style={[
+                    styles.box,
+                    {backgroundColor: 'rgba(110, 113, 145, 1)'},
+                  ]}
+                />
+                <Text>Sold</Text>
               </View>
             </View>
           </View>
@@ -182,7 +217,10 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
     borderRadius: 6,
   },
-  seatDesc: {},
+  seatDesc: {
+    marginTop: 24,
+    paddingBottom: 20,
+  },
   boxDesc: {
     flexDirection: 'row',
     marginTop: 10,
@@ -194,9 +232,14 @@ const styles = StyleSheet.create({
   box: {
     width: 20,
     height: 20,
-    backgroundColor: 'red',
     borderRadius: 5,
     marginRight: 5,
+  },
+  seating: {
+    fontWeight: '600',
+    fontSize: 16,
+    lineHeight: 28,
+    color: colors.black,
   },
 });
 

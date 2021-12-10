@@ -267,7 +267,7 @@ function Profile({navigation}) {
 
   useEffect(() => {
     getTicket();
-    console.log(ticket);
+    console.log(ticket, 'Ticket');
   }, []);
 
   return (
@@ -295,7 +295,7 @@ function Profile({navigation}) {
       >
         {isHistory ? (
           <View style={styles.wrapHistory}>
-            {ticket.length === 0 ? (
+            {ticket.length > 0 ? (
               <>
                 {ticket.map(item => (
                   <TicketHistory
@@ -303,6 +303,7 @@ function Profile({navigation}) {
                     date={item.dateBooking}
                     time={item.timeBooking}
                     name={item.nameMovie}
+                    status={item.statusUsed}
                     key={item.id}
                   />
                 ))}
@@ -364,7 +365,7 @@ const styles = StyleSheet.create({
   navbar: {
     paddingHorizontal: 48,
     backgroundColor: '#fff',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     flexDirection: 'row',
   },
   navbarWrap: {

@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {cineone21, hiflix, ebvid} from '../../../assets/images';
 import {colors} from '../../../utils/colors';
 
-function TicketHistory({premiere, date, time, name}) {
+function TicketHistory({premiere, date, time, name, status}) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -27,8 +27,15 @@ function TicketHistory({premiere, date, time, name}) {
           <Text style={styles.title}>{name}</Text>
         </View>
 
-        <TouchableOpacity style={styles.buttonActive}>
-          <Text style={styles.buttonTextActive}>Ticket in active</Text>
+        <TouchableOpacity
+          style={status === 'Active' ? styles.buttonActive : styles.button}>
+          <Text style={styles.buttonTextActive}>
+            {status === 'Active'
+              ? 'Ticket in Active'
+              : status === 'notActive'
+              ? 'Ticket used'
+              : 'process of payment'}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -69,6 +76,12 @@ const styles = StyleSheet.create({
     width: 120,
     height: 30,
     resizeMode: 'contain',
+  },
+  button: {
+    paddingVertical: 10,
+    backgroundColor: 'rgba(110, 113, 145, 1)',
+    alignItems: 'center',
+    borderRadius: 4,
   },
   buttonActive: {
     paddingVertical: 10,

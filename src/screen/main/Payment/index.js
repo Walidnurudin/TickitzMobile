@@ -55,27 +55,28 @@ function Payment({navigation, route}) {
   }, []);
 
   return (
-    <ScrollView>
+    <View>
       <View style={styles.payment}>
         <Text style={styles.totalPayment}>Total Payment</Text>
         <Text style={styles.price}>${data.total}</Text>
       </View>
-
-      <PaymentMethod
-        pay={data.paymentMethod}
-        onPress={item => handlePayment(item)}
-      />
-      <PersonalInfo />
-      <View style={styles.wrapButton}>
-        <Button
-          title="Pay your order"
-          disabled={!data.paymentMethod}
-          onPress={handlePay}
-          isLoading={loading}
+      <ScrollView>
+        <PaymentMethod
+          pay={data.paymentMethod}
+          onPress={item => handlePayment(item)}
         />
-      </View>
-      <Footer />
-    </ScrollView>
+        <PersonalInfo />
+        <View style={styles.wrapButton}>
+          <Button
+            title="Pay your order"
+            disabled={!data.paymentMethod}
+            onPress={handlePay}
+            isLoading={loading}
+          />
+        </View>
+        <Footer />
+      </ScrollView>
+    </View>
   );
 }
 

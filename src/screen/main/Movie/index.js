@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  Button,
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
@@ -20,7 +19,7 @@ function Movie({navigation, route}) {
   const [openDate, setOpenDate] = useState(false);
 
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('');
   const [items, setItems] = useState([
     {label: 'Jakarta', value: 'Jakarta'},
     {label: 'Bandung', value: 'Bandung'},
@@ -59,9 +58,7 @@ function Movie({navigation, route}) {
   const getScheduleByIdMovie = () => {
     axios
       .get(
-        `/schedule?page=${params.page}&limit=${
-          params.limit
-        }&searchLocation=${''}&searchMovieId=${params.movieId}`,
+        `/schedule?page=${params.page}&limit=${params.limit}&searchLocation=${value}&searchMovieId=${params.movieId}`,
       )
       .then(res => {
         console.log(res.data);
@@ -118,6 +115,10 @@ function Movie({navigation, route}) {
       // .join(' '),
     });
   };
+
+  useEffect(() => {
+    getScheduleByIdMovie();
+  }, [value]);
 
   useEffect(() => {
     getMovieById();
@@ -199,7 +200,7 @@ function Movie({navigation, route}) {
             </>
           ) : (
             <>
-              <Text>Schedule not found</Text>
+              <Text style={{alignSelf: 'center'}}>Schedule not found</Text>
             </>
           )}
         </View>
