@@ -14,6 +14,7 @@ import {
   Payment,
   Ticket,
   Search,
+  Midtrans,
 } from '../screen/main';
 import {DrawerContent} from '../components/atoms';
 
@@ -43,6 +44,11 @@ function HomeNavigator() {
       <Stack.Screen
         component={Ticket}
         name="Ticket"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Midtrans}
+        name="Midtrans"
         options={{headerShown: false}}
       />
     </Stack.Navigator>

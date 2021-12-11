@@ -35,11 +35,13 @@ function Payment({navigation, route}) {
         seat: data.dataSeat,
       })
       .then(res => {
-        console.log(res.data.data.id);
+        console.log(res.data.data);
         setLoading(false);
-        navigation.navigate('Ticket', {
+
+        navigation.navigate('Midtrans', {
           params: {
             ...data,
+            url: res.data.data.urlRedirect,
             bookingId: res.data.data.id,
           },
         });
