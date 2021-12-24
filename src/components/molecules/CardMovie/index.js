@@ -11,10 +11,8 @@ function CardMovie({item, toDetail}) {
         style={styles.image}
         source={
           item.image
-            ? // ? `${URL_BACKEND}/uploads/movie/${item.image}`
-              {
+            ? {
                 uri: `${URL_BACKEND}/uploads/movie/${item.image}`,
-                // uri: `http://192.168.43.155:3001/uploads/movie/${item.image}`,
               }
             : def
         }

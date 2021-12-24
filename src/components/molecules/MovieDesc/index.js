@@ -12,10 +12,8 @@ function MovieDesc({data}) {
           style={styles.image}
           source={
             data.image
-              ? // ? `${URL_BACKEND}/uploads/movie/${data.image}`
-                {
+              ? {
                   uri: `${URL_BACKEND}/uploads/movie/${data.image}`,
-                  // uri: `http://192.168.43.155:3001/uploads/movie/${data.image}`,
                 }
               : def
           }

@@ -37,7 +37,7 @@ function UpdateProfile({
         label="Email"
         placeholder="Write your email"
         value={email}
-        onChange={value => onChange(value, 'email')}
+        // onChange={value => onChange(value, 'email')}
       />
       <Gap height={25} />
       <Input

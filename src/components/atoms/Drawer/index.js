@@ -42,10 +42,8 @@ function DrawerContent(props) {
           <Image
             source={
               user.data.image
-                ? // ? `${URL_BACKEND}/uploads/movie/${user.data.image}`
-                  {
+                ? {
                     uri: `${URL_BACKEND}/uploads/user/${user.data.image}`,
-                    // uri: `http://192.168.43.155:3001/uploads/movie/${user.data.image}`,
                   }
                 : def
             }
