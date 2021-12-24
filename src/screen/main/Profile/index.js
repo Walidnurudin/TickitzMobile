@@ -300,7 +300,7 @@ function Profile({navigation}) {
                 {ticket.map(item => (
                   <TicketHistory
                     premiere={item.premiere}
-                    date={item.dateBooking}
+                    date={item.dateBooking.split('T')[0]}
                     time={item.timeBooking}
                     name={item.nameMovie}
                     status={item.statusUsed}

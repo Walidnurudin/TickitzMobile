@@ -26,6 +26,7 @@ function Login({navigation}) {
   };
 
   const handleLogin = () => {
+    console.log('oke');
     setResponse({
       ...response,
       isLoadingButton: true,
@@ -40,9 +41,14 @@ function Login({navigation}) {
           ...response,
           isLoadingButton: false,
         });
+        setData({
+          email: '',
+          password: '',
+        });
         navigation.navigate('AppNavigator', {screen: 'Home'});
       })
       .catch(err => {
+        console.log(err);
         setResponse({
           isSuccess: false,
           isShow: true,
@@ -70,12 +76,14 @@ function Login({navigation}) {
       <Input
         label="Email"
         placeholder="Write your email"
+        value={data.email}
         onChange={value => handleInput(value, 'email')}
       />
       <Gap height={25} />
       <Input
         label="Password"
         placeholder="Write your password"
+        value={data.password}
         isPassword={true}
         onChange={value => handleInput(value, 'password')}
       />

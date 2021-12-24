@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {PersonalInfo, PaymentMethod} from '../../../components/molecules';
 import {colors} from '../../../utils/colors';
 import axios from '../../../utils/axios';
+import Notifications from './notif';
 
 function Payment({navigation, route}) {
   const [data, setData] = useState({
@@ -35,7 +36,7 @@ function Payment({navigation, route}) {
         seat: data.dataSeat,
       })
       .then(res => {
-        console.log(res.data.data);
+        Notifications.reminderNotification();
         setLoading(false);
 
         navigation.navigate('Midtrans', {

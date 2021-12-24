@@ -10,9 +10,9 @@ function SceduleCard({onBook, onTime, data, scheduleId, timeSchedule}) {
       <View style={styles.wrapImage}>
         <Image
           source={
-            data.premire === 'hiflix'
+            data.premiere === 'hiflix'
               ? hiflix
-              : data.premire === 'cineone21'
+              : data.premiere === 'cineone21'
               ? cineone21
               : ebvid
           }
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 30,
     marginBottom: 12,
+    resizeMode: 'contain',
   },
   address: {
     fontWeight: '300',

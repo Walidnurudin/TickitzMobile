@@ -28,7 +28,7 @@ function Movie({navigation, route}) {
 
   const [params, setParams] = useState({
     page: 1,
-    limit: 1,
+    limit: 2,
     movieId: route.params.params.idMovie,
   });
   const [dataMovie, setDataMovie] = useState({});
@@ -48,7 +48,10 @@ function Movie({navigation, route}) {
       .get(`/movie/${params.movieId}`)
       .then(res => {
         console.log(res);
-        setDataMovie(res.data.data[0]);
+        setDataMovie({
+          ...res.data.data[0],
+          releaseDate: res.data.data[0].releaseDate.split('T')[0],
+        });
       })
       .catch(err => {
         console.log(err);

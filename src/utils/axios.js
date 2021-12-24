@@ -5,7 +5,7 @@ import {URL_BACKEND} from '@env';
 console.log(URL_BACKEND);
 
 const axiosApiIntaces = axios.create({
-  baseURL: URL_BACKEND,
+  baseURL: 'http://192.168.0.104:3001',
 });
 
 const setToken = async (token, refreshToken) => {

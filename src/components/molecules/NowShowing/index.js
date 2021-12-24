@@ -17,11 +17,17 @@ function NowShowing({navigation, data}) {
     navigation.navigate('Movie', {params: {idMovie: id}});
   };
 
+  const viewAll = () => {
+    navigation.navigate('SearchNavigator');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.nowShowing}>Now Showing</Text>
-        <Text style={styles.viewAll}>view all</Text>
+        <Text style={styles.viewAll} onPress={viewAll}>
+          view all
+        </Text>
       </View>
 
       <FlatList
