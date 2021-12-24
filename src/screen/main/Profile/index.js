@@ -18,6 +18,7 @@ import {Footer} from '../../../components/atoms';
 import {colors} from '../../../utils/colors';
 import axios from '../../../utils/axios';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Notifications from '../Payment/notif';
 
 // REDUX
 import {useSelector, useDispatch} from 'react-redux';
@@ -63,37 +64,59 @@ function Profile({navigation}) {
   //   loading: false,
   // });
 
+  // NAVIGATION
+  const showDetail = item => {
+    navigation.navigate('HomeNavigator', {
+      screen: 'Ticket',
+      params: {
+        bookingId: item.id,
+        userId: item.userId,
+        name: item.name,
+        premiere: item.premiere,
+        total: item.totalPayment,
+        statusPayment: item.statusPayment,
+        scheduleId: item.scheduleId,
+        timeSchedule: item.timeBooking,
+        dateSchedule: item.dateBooking,
+        paymentMethod: item.paymentMethod,
+        dataSeat: item.seat,
+      },
+    });
+  };
+
+  const continuePayment = item => {
+    Notifications.reminderNotification();
+
+    navigation.navigate('HomeNavigator', {
+      screen: 'Midtrans',
+      params: {
+        params: {
+          bookingId: item.id,
+          userId: item.userId,
+          name: item.name,
+          premiere: item.premiere,
+          total: item.totalPayment,
+          statusPayment: item.statusPayment,
+          scheduleId: item.scheduleId,
+          timeSchedule: item.timeBooking,
+          dateSchedule: item.dateBooking,
+          paymentMethod: item.paymentMethod,
+          dataSeat: item.seat,
+          url: item.payment,
+        },
+      },
+    });
+  };
+
   // TICKET
   const getTicket = () => {
     axios
-      .get('/booking/user-id')
+      .get('user/ticket-history')
       .then(res => {
-        let temp = [];
-        let result = res.data.data;
-
-        result.map(item => {
-          axios
-            .get(`/movie/${item.movieId}`)
-            .then(res => {
-              item.nameMovie = res.data.data[0].name;
-              axios
-                .get(`/schedule/${item.scheduleId}`)
-                .then(res => {
-                  item.premiere = res.data.data[0].premiere;
-                  temp.push(item);
-                  setTicket(temp);
-                })
-                .catch(err => {
-                  console.log(err);
-                });
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        });
+        setTicket(res.data.data);
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -159,7 +182,6 @@ function Profile({navigation}) {
 
   // IMAGE
   const handleImage = () => {
-    console.log('Launch');
     Alert.alert('Update image', 'Upload image profile', [
       // GALLERY
       {
@@ -176,7 +198,7 @@ function Profile({navigation}) {
               });
             }
           } catch (error) {
-            console.log(error);
+            console.log(error.response);
           }
         },
       },
@@ -208,7 +230,7 @@ function Profile({navigation}) {
                 });
               }
             } catch (error) {
-              console.log(error);
+              console.log(error.response);
             }
           } else {
             console.log('Camera permission denied');
@@ -231,15 +253,11 @@ function Profile({navigation}) {
         formData.append(data, setData[data]);
       }
 
-      console.log(formData);
-
       dispatch(updateImage(formData))
         .then(res => {
-          console.log('RES', res);
           dispatch(getUser());
         })
         .catch(err => {
-          console.log('ERROR', err.response);
           Alert.alert('Error', err.response.data.msg);
         });
     }
@@ -253,11 +271,9 @@ function Profile({navigation}) {
         onPress: () => {
           dispatch(updateImage({}))
             .then(res => {
-              console.log('RES', res);
               dispatch(getUser());
             })
             .catch(err => {
-              console.log('ERROR', err.response);
               Alert.alert('Error', err.response.data.msg);
             });
         },
@@ -267,7 +283,6 @@ function Profile({navigation}) {
 
   useEffect(() => {
     getTicket();
-    console.log(ticket, 'Ticket');
   }, []);
 
   return (
@@ -302,9 +317,11 @@ function Profile({navigation}) {
                     premiere={item.premiere}
                     date={item.dateBooking.split('T')[0]}
                     time={item.timeBooking}
-                    name={item.nameMovie}
+                    name={item.name}
                     status={item.statusUsed}
                     key={item.id}
+                    onPressShow={() => showDetail(item)}
+                    onPressPayment={() => continuePayment(item)}
                   />
                 ))}
               </>

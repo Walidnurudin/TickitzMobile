@@ -56,10 +56,6 @@ function Midtrans({navigation, route}) {
     );
   };
 
-  useEffect(() => {
-    console.log(route);
-  }, []);
-
   return (
     <>
       <SafeAreaView style={styles.flexContainer}>

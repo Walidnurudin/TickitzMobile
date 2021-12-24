@@ -17,10 +17,6 @@ function Ticket({navigation, route}) {
     `${URL_BACKEND}/booking/used-ticket/${params.bookingId}`,
   );
 
-  useEffect(() => {
-    console.log(route.params.params);
-  }, []);
-
   return (
     <ScrollView>
       <View style={styles.container}>

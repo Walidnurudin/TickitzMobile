@@ -26,7 +26,6 @@ function Login({navigation}) {
   };
 
   const handleLogin = () => {
-    console.log('oke');
     setResponse({
       ...response,
       isLoadingButton: true,
@@ -48,7 +47,7 @@ function Login({navigation}) {
         navigation.navigate('AppNavigator', {screen: 'Home'});
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
         setResponse({
           isSuccess: false,
           isShow: true,

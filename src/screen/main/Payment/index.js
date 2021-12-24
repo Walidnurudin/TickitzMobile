@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Footer, Button} from '../../../components/atoms';
+import React, {useState} from 'react';
+import {Footer, Button, MsgResponse} from '../../../components/atoms';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {PersonalInfo, PaymentMethod} from '../../../components/molecules';
 import {colors} from '../../../utils/colors';
@@ -19,6 +19,11 @@ function Payment({navigation, route}) {
     paymentMethod: '',
   });
 
+  const [response, setResponse] = useState({
+    show: false,
+    isSuccess: false,
+    msg: '',
+  });
   const [loading, setLoading] = useState(false);
 
   const handlePayment = item => {
@@ -49,13 +54,21 @@ function Payment({navigation, route}) {
       })
       .catch(err => {
         setLoading(false);
-        console.log(err.response);
+        setResponse({
+          show: true,
+          isSuccess: false,
+          msg: err.response.data.msg,
+        });
+
+        setTimeout(() => {
+          setResponse({
+            show: false,
+            isSuccess: false,
+            msg: '',
+          });
+        }, 4000);
       });
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   return (
     <View>
@@ -70,6 +83,10 @@ function Payment({navigation, route}) {
         />
         <PersonalInfo />
         <View style={styles.wrapButton}>
+          {response.show && (
+            <MsgResponse isSuccess={response.isSuccess} msg={response.msg} />
+          )}
+
           <Button
             title="Pay your order"
             disabled={!data.paymentMethod}

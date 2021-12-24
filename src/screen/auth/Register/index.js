@@ -26,7 +26,6 @@ function Register({navigation}) {
   };
 
   const handleRegister = () => {
-    console.log(data);
     setResponse({
       ...response,
       isLoadingButton: true,

@@ -47,14 +47,13 @@ function Movie({navigation, route}) {
     axios
       .get(`/movie/${params.movieId}`)
       .then(res => {
-        console.log(res);
         setDataMovie({
           ...res.data.data[0],
           releaseDate: res.data.data[0].releaseDate.split('T')[0],
         });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -64,7 +63,6 @@ function Movie({navigation, route}) {
         `/schedule?page=${params.page}&limit=${params.limit}&searchLocation=${value}&searchMovieId=${params.movieId}`,
       )
       .then(res => {
-        console.log(res.data);
         setDataSchedule({data: res.data.data, pagination: res.data.pagination});
       })
       .catch(err => {
@@ -93,7 +91,6 @@ function Movie({navigation, route}) {
   };
 
   const onTime = (time, scheduleId) => {
-    console.log(time, scheduleId);
     setTempData({...tempData, timeSchedule: time, scheduleId: scheduleId});
   };
 
@@ -107,15 +104,6 @@ function Movie({navigation, route}) {
         // .splice(0, 4)
         // .join(' '),
       },
-    });
-
-    console.log({
-      ...tempData,
-      dateSchedule: tempData.dateSchedule.toISOString().split('T')[0],
-      // .toString()
-      // .split(' ')
-      // .splice(0, 5)
-      // .join(' '),
     });
   };
 

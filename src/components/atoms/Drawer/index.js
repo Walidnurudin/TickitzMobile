@@ -28,7 +28,7 @@ function DrawerContent(props) {
               screen: 'Login',
             });
           } catch (error) {
-            console.log(error);
+            console.log(error.response);
           }
         },
       },

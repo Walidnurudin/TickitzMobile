@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function Splash(props) {
   const checkToken = async () => {
     const token = await AsyncStorage.getItem('token');
-    console.log('TOKEN', token);
+
     setTimeout(() => {
       if (token) {
         props.navigation.navigate('AppNavigator');

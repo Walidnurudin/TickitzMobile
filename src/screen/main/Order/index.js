@@ -45,7 +45,7 @@ function Order({navigation, route}) {
         setDataMovie(res.data.data[0]);
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -53,7 +53,6 @@ function Order({navigation, route}) {
     axios
       .get(`/schedule/${params.scheduleId}`)
       .then(res => {
-        console.log(res, 'SCHEDULE');
         setDataSchedule(res.data.data[0]);
         setParams({
           ...params,
@@ -61,7 +60,7 @@ function Order({navigation, route}) {
         });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 
@@ -71,7 +70,6 @@ function Order({navigation, route}) {
         `/seat/?scheduleId=${params.scheduleId}&movieId=${params.movieId}&dateBooking=${params.dateSchedule}&timeBooking=${params.timeSchedule}`,
       )
       .then(res => {
-        console.log(res, 'SEAT');
         setReservedSeat(res.data.data);
       })
       .catch(err => {
@@ -94,7 +92,6 @@ function Order({navigation, route}) {
   };
 
   useEffect(() => {
-    console.log(route.params);
     getSeat();
     getMovieById();
     getScheduleById();

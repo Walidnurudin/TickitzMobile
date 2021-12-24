@@ -20,16 +20,13 @@ function Home(props) {
   const [dataMovieMonth, setDataMovieMonth] = useState([]);
 
   const getDataUser = async () => {
-    dispatch(getUser()).then(res => {
-      console.log(res, 'GET USER REDUX');
-    });
+    dispatch(getUser());
   };
 
   const getMovies = () => {
     axios
       .get('/movie?page=&limit=&search=&month=&sort=name ASC')
       .then(res => {
-        console.log(res.data.data);
         setDataMovies(res.data.data);
       })
       .catch(err => {
@@ -41,7 +38,6 @@ function Home(props) {
     axios
       .get(`/movie?page=&limit=&search=&month=${month}&sort=name ASC`)
       .then(res => {
-        console.log(res.data.data);
         setDataMovieMonth(res.data.data);
       })
       .catch(err => {
@@ -55,7 +51,6 @@ function Home(props) {
     axios
       .get(`/movie?page=&limit=&search=&month=${value}&sort=name ASC`)
       .then(res => {
-        console.log(res.data.data);
         setDataMovieMonth(res.data.data);
       })
       .catch(err => {
