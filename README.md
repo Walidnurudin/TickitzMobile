@@ -51,9 +51,7 @@ some technology used in this project.
 
 ### Link
 
-<!--
-Mobile app [Google Drive](https://tickitzapp.netlify.app/)
--->
+Mobile app [Google Drive](https://drive.google.com/file/d/1sVxhvakY3zS6667MQtFfb8g5LXMM2Z43/view?usp=sharing)
 
 ### Screenshot
 
