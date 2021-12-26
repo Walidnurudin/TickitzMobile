@@ -12,7 +12,7 @@ import QRCode from 'react-native-qrcode-svg';
 import {URL_BACKEND} from '@env';
 
 function Ticket({navigation, route}) {
-  const [params, setParams] = useState(route.params.params);
+  const [params, setParams] = useState(route.params);
   const [value, setValue] = useState(
     `${URL_BACKEND}/booking/used-ticket/${params.bookingId}`,
   );
@@ -38,7 +38,9 @@ function Ticket({navigation, route}) {
             <View style={styles.wrapContent}>
               <View style={{flex: 3}}>
                 <Text style={styles.title}>Date</Text>
-                <Text style={styles.value}>{params.dateSchedule || '-'}</Text>
+                <Text style={styles.value}>
+                  {params.dateSchedule.split('T')[0] || '-'}
+                </Text>
               </View>
               <View style={{flex: 2}}>
                 <Text style={styles.title}>Time</Text>
