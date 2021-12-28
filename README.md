@@ -51,7 +51,7 @@ some technology used in this project.
 
 ### Link
 
-Mobile app [Google Drive](https://drive.google.com/file/d/1sVxhvakY3zS6667MQtFfb8g5LXMM2Z43/view?usp=sharing)
+Mobile app ([Google Drive])(https://drive.google.com/file/d/1D7Ju4PIpvsVCZMtB7wf_ESH2lPhkY1Ce/view?usp=sharing)
 
 ### Screenshot
 
