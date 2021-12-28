@@ -24,13 +24,15 @@ function Midtrans({navigation, route}) {
     paymentMethod: route.params.params.paymentMethod,
   });
 
+  useEffect(() => {
+    console.log(params);
+  }, []);
+
   const webviewRef = React.useRef(null);
 
   const toTicket = () => {
     navigation.navigate('Ticket', {
-      params: {
-        ...params,
-      },
+      ...params,
     });
   };
 

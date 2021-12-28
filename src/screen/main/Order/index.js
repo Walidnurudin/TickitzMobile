@@ -70,7 +70,9 @@ function Order({navigation, route}) {
         `/seat/?scheduleId=${params.scheduleId}&movieId=${params.movieId}&dateBooking=${params.dateSchedule}&timeBooking=${params.timeSchedule}`,
       )
       .then(res => {
-        setReservedSeat(res.data.data);
+        const newReserved = [];
+        res.data.data.map(item => newReserved.push(item.seat));
+        setReservedSeat(newReserved);
       })
       .catch(err => {
         console.log(err.response);

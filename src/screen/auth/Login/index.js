@@ -5,8 +5,11 @@ import {colors} from '../../../utils/colors';
 import {tickitz} from '../../../assets/images';
 import axios from '../../../utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getUser} from '../../../stores/actions/user';
+import {useDispatch} from 'react-redux';
 
 function Login({navigation}) {
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -36,6 +39,7 @@ function Login({navigation}) {
       .then(res => {
         AsyncStorage.setItem('token', res.data.data.token);
         AsyncStorage.setItem('token', res.data.data.refreshToken);
+        dispatch(getUser());
         setResponse({
           ...response,
           isLoadingButton: false,

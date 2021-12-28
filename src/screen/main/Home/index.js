@@ -9,7 +9,6 @@ import {
 } from '../../../components/molecules';
 import axios from '../../../utils/axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {getUser} from '../../../stores/actions/user';
 
 function Home(props) {
   const dispatch = useDispatch();
@@ -18,10 +17,6 @@ function Home(props) {
 
   const [month, setMonth] = useState(9);
   const [dataMovieMonth, setDataMovieMonth] = useState([]);
-
-  const getDataUser = async () => {
-    dispatch(getUser());
-  };
 
   const getMovies = () => {
     axios
@@ -59,7 +54,6 @@ function Home(props) {
   };
 
   useEffect(() => {
-    getDataUser();
     getMovies();
     getMovieByMonth();
   }, []);

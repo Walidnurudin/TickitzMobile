@@ -17,6 +17,10 @@ function Ticket({navigation, route}) {
     `${URL_BACKEND}/booking/used-ticket/${params.bookingId}`,
   );
 
+  useEffect(() => {
+    console.log(params);
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -38,9 +42,7 @@ function Ticket({navigation, route}) {
             <View style={styles.wrapContent}>
               <View style={{flex: 3}}>
                 <Text style={styles.title}>Date</Text>
-                <Text style={styles.value}>
-                  {params.dateSchedule.split('T')[0] || '-'}
-                </Text>
+                <Text style={styles.value}>{params.dateSchedule || '-'}</Text>
               </View>
               <View style={{flex: 2}}>
                 <Text style={styles.title}>Time</Text>
@@ -51,13 +53,13 @@ function Ticket({navigation, route}) {
               <View style={{flex: 3}}>
                 <Text style={styles.title}>Count</Text>
                 <Text style={styles.value}>
-                  {params.dataSeat.length || 0} pcs
+                  {params.dataSeat?.length || 0} pcs
                 </Text>
               </View>
               <View style={{flex: 2}}>
                 <Text style={styles.title}>Seats</Text>
                 <Text style={styles.value}>
-                  {params.dataSeat.join(',  ') || '-'}
+                  {params.dataSeat?.join(',  ') || '-'}
                 </Text>
               </View>
             </View>
