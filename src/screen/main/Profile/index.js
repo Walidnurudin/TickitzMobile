@@ -258,7 +258,7 @@ function Profile({navigation}) {
           dispatch(getUser());
         })
         .catch(err => {
-          Alert.alert('Error', `${user.data.msg}`);
+          Alert.alert('Error', `${user.msg}`);
         });
     }
   };
@@ -274,7 +274,7 @@ function Profile({navigation}) {
               dispatch(getUser());
             })
             .catch(err => {
-              Alert.alert('Error', `${user.data.msg}`);
+              Alert.alert('Error', `${user.msg}`);
             });
         },
       },
