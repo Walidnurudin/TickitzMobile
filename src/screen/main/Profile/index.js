@@ -191,10 +191,15 @@ function Profile({navigation}) {
             const result = await launchImageLibrary();
             if (result.didCancel) {
             } else {
-              handleImageSubmit({
+              console.log({
                 uri: result.assets[0].uri,
                 name: result.assets[0].fileName,
                 type: result.assets[0].type,
+              });
+              handleImageSubmit({
+                uri: result.assets[0].uri,
+                name: result.assets[0].fileName,
+                type: 'mp4/video',
               });
             }
           } catch (error) {
@@ -253,13 +258,24 @@ function Profile({navigation}) {
         formData.append(data, setData[data]);
       }
 
-      dispatch(updateImage(formData))
+      axios
+        .patch('/user/update-image', formData)
         .then(res => {
           dispatch(getUser());
         })
         .catch(err => {
-          Alert.alert('Error', `${user.msg}`);
+          Alert.alert('Error', `${err.response.data.msg}`);
         });
+
+      // dispatch(updateImage(formData))
+      //   .then(res => {
+      //     console.log(res, 'RES');
+      //     dispatch(getUser());
+      //   })
+      //   .catch(err => {
+      //     console.log(err.response, user, 'err');
+      //     // Alert.alert('Error', `${user.msg}`);
+      //   });
     }
   };
 

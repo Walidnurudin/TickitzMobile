@@ -37,7 +37,6 @@ const user = (state = initialState, action) => {
     case 'UPDATE_USER_PENDING':
       return {
         ...state,
-        data: '',
         isLoading: true,
         isError: false,
         msg: '',
@@ -54,7 +53,6 @@ const user = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: '',
         msg: action.payload.response.data.msg,
       };
 
@@ -62,7 +60,6 @@ const user = (state = initialState, action) => {
     case 'UPDATE_IMAGE_PENDING':
       return {
         ...state,
-        data: '',
         isLoading: true,
         isError: false,
         msg: '',
@@ -79,7 +76,6 @@ const user = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: '',
         msg: action.payload.response.data.msg,
       };
 
@@ -87,7 +83,6 @@ const user = (state = initialState, action) => {
     case 'UPDATE_PASSWORD_PENDING':
       return {
         ...state,
-        data: '',
         isLoading: true,
         isError: false,
         msg: '',
@@ -104,7 +99,6 @@ const user = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: '',
         msg: action.payload.response.data.msg,
       };
 
